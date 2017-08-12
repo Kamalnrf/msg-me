@@ -1,0 +1,29 @@
+{
+  "name": "msg-me",
+  "version": "0.0.1",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kamalnrf/msg-me.git"
+  },
+  "keywords": [
+    "chat-bot"
+  ],
+  "author": "kamalnrf",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Kamalnrf/msg-me/issues"
+  },
+  "homepage": "https://github.com/Kamalnrf/msg-me#readme",
+  "dependencies": {
+    "bootbot": "^1.0.12",
+    "dotenv": "^4.0.0",
+    "nconf": "^0.8.4",
+    "q": "^1.5.0",
+    "redis": "^2.8.0"
+  }
+}
