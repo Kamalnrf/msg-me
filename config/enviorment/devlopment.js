@@ -4,10 +4,15 @@
 
 const nconf = require('nconf');
 
+// Load Environment variables from .env file
+require('dotenv').load();
+// Load environment variables
+nconf.env();
+
 const facebook = {
-    accessToken: 'EAABkKmXR6LIBAFRn3nXYBZAPeTZAZCR0EkZCt3ZA051tRk9v4mL0gIr4B0oTjsWRZABNg1kxAxokJP04ZAZC9IpeIoxpC4uG6qpqp9t20bJpCA4fM5mfstpJ9dZC5CuFX14O0Y4V5t16bio5clht9bVAfJZByPf4rMTyuA0lAJuAQ61oZAEtRbDJqZC6',
-    verifyToken: 'bothook',
-    appSecret: '5b37c0715b54f776515fb8adc91eca48'
+    accessToken: nconf.get('NODE_ACCESSTOKEN'),
+    verifyToken: nconf.get('NODE_VERIFYTOKEN'),
+    appSecret: nconf.get('NODE_APPSECRET')
 };
 
 const redisConfig = {

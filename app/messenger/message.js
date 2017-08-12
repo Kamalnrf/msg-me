@@ -17,11 +17,12 @@ const message = (bot) => {
         msg_me.isExiting(payload.sender.id)
             .then(existence => {
                 console.log(`Existence ${existence}`);
+
                 if (existence === true) {
                     msg_me.isConnected(payload.sender.id)
-                        .then(connection => {
-                            console.log(`Connection ${connection}`);
-                            if (connection !== true) {
+                        .then(connected => {
+                            console.log(`Connection ${connected}`);
+                            if (connected !== "true") {
 
                                 chat.say("You need to establish a connection.")
                                     .then(() => {

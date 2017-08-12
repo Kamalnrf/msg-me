@@ -97,10 +97,10 @@ const msgMe = {
 
     /**
      * Returns recieverID
-     * @param fbId
+     * @param senderID
      */
     conectedTo(senderID) {
-        return redis.getKey(fbId + "Texting");
+        return redis.getKey(senderID + "Texting");
     }
 };
 
