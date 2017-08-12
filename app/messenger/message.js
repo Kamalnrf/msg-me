@@ -17,14 +17,18 @@ const message = (bot) => {
         msg_me.isExiting(payload.sender.id)
             .then(existence => {
                 console.log(`Existence ${existence}`);
-                if (existence) {
+                if (existence === true) {
                     msg_me.isConnected(payload.sender.id)
                         .then(connection => {
-                            if (connection) {
+                            console.log(`Connection ${connection}`);
+                            if (connection !== true) {
+
                                 chat.say("You need to establish a connection.")
                                     .then(() => {
                                         chat.conversation((convo) => {
-                                            convo.sendTypingIndicator(1000).then(() => connection.estConnection(convo, payload, bot));
+                                            convo.sendTypingIndicator(1000)
+                                                .then(() => connection.estConnection(convo, payload, bot))
+                                                .catch(error => console.log(error));
                                         })
                                     })
                             }
@@ -39,9 +43,9 @@ const message = (bot) => {
                                                 chat.say("Your connection has been closed");
                                             }
                                         }
-                                    })
+                                    }).catch(error => console.log(error));
                             }
-                        });
+                        }).catch(error => console.log(error));
                 }
                 else
                     chat.say("It seems you haven't created a username for you yet.")

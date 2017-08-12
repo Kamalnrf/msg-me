@@ -16,8 +16,8 @@ const msgMe = {
         try{
             redis.setKey(fbID, userName);
             redis.setKey(userName, fbID);
-            redis.setKey(userName + "isTexting", false);
-            redis.setKey(userName + "Texting", -1);
+            redis.setKey(fbID + "isTexting", false);
+            redis.setKey(fbID + "Texting", -1);
 
             return true;
         }catch (error){
