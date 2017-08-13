@@ -17,7 +17,7 @@ const facebook = {
 
 const redisConfig = {
     redis: {
-        port: process.env.port,
+        port: 6379,
         host: process.env.REDIS_URL,
         pass: '',
         db: 1
