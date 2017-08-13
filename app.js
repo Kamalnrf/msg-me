@@ -10,6 +10,7 @@ const server = require('./config/initializers/server');
 const redis = require('./services/redis');
 const setUp = require('./config/initializers/setup');
 const message = require('./app/messenger/message');
+const postbacks = require('./app/messenger/postback');
 
 nconf.use('memory');
 // Load Environment variables from .env file
@@ -36,6 +37,9 @@ setUp(bot);
 
 //Messages
 message(bot);
+
+//Postbacks
+postback(bot);
 
 //Starting the server
 server(bot);

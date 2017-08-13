@@ -71,4 +71,6 @@ const postback = (bot) => {
                         });
             })
     })
+
+    console.log(`Initialized the postbacks.`);
 };
