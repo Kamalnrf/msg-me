@@ -39,7 +39,7 @@ setUp(bot);
 message(bot);
 
 //Postbacks
-postback(bot);
+postbacks(bot);
 
 //Starting the server
 server(bot);

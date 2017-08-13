@@ -74,3 +74,5 @@ const postback = (bot) => {
 
     console.log(`Initialized the postbacks.`);
 };
+
+module.exports = postback;
