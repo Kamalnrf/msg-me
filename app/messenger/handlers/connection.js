@@ -25,7 +25,7 @@ const Connection = {
                                 msg_me.isOnline(recieverID)
                                     .then(isOnline => {
                                         //Checks whether the user is online.
-                                        if (isOnline)
+                                        if (isOnline === 'true' || isOnline === true)
                                             msg_me.isConnected(recieverID)
                                                 .then(conected => {
                                                     console.log(`Connected: ${conected}`);
