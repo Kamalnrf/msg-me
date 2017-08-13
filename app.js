@@ -23,9 +23,9 @@ require('./config/enviorment/'+nconf.get('NODE_ENV'));
 console.log(nconf.get('NODE_ENV'));
 
 global.bot = new BootBot({
-    accessToken: nconf.get('facebook:accessToken'),
-    verifyToken: nconf.get('facebook:verifyToken'),
-    appSecret: nconf.get('facebook:appSecret')
+    accessToken: nconf.get('facebook:accessToken' || process.env.NODE_ACCESSTOKEN),
+    verifyToken: nconf.get('facebook:verifyToken' || process.env.NODE_VERIFYTOKEN),
+    appSecret: nconf.get('facebook:appSecret' || process.env.NODE_APPSECRET)
 });
 
 //Initializing redis.
