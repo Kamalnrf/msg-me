@@ -23,7 +23,7 @@ const Connection = {
                             .then(recieverID => {
                                 msg_me.isConnected(recieverID)
                                     .then(conected => {
-                                        if (conected !== true)
+                                        if (conected !== true || conected !== "true")
                                             if (msg_me.connect(senderID, recieverID) === true) {
                                                 chat.say(`We have established connection between you and ${userName}.`);
                                                 bot.say(recieverID, `A connection has been established`);

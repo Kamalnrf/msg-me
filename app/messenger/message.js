@@ -18,7 +18,7 @@ const message = (bot) => {
             .then(existence => {
                 console.log(`Existence ${existence}`);
 
-                if (existence === true) {
+                if (existence === true ) {
                     msg_me.isConnected(payload.sender.id)
                         .then(connected => {
                             console.log(`Connection ${connected}`);
@@ -36,6 +36,7 @@ const message = (bot) => {
                             else {
                                 msg_me.conectedTo(payload.sender.id)
                                     .then(reciverID => {
+                                        console.log()
                                         if (message !== 'end!')
                                             bot.say(reciverID, message);
                                         else if (message === 'end!'){
