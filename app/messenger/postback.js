@@ -18,7 +18,7 @@ const postback = (bot) => {
         msg_me.isOnline(fbID)
             .then(isOnline => {
                 console.log(`isOnline ${isOnline}\nType: ${typeof isOnline}`);
-                if (isOnline)
+                if (isOnline === 'true')
                     (msg_me.turnOffline(fbID)) ? chat.say("Turned you offline") : chat.say("Something went wrong tryagain");
                 else if (isOnline === false || isOnline === "false")
                     (msg_me.turnOnline(fbID)) ? chat.say("Turned you online") : chat.say("Something went wrong tryagain");
@@ -40,7 +40,7 @@ const postback = (bot) => {
 
         msg_me.isConnected(fbID)
             .then(connected => {
-                if (connected)
+                if (connected === 'true' || connected === true)
                     chat.say("When you are in a conversation you can't start a new one.");
                 else if (connected === 'false' || connected === false)
                     chat.conversation((convo) => {
