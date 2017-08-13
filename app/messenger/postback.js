@@ -17,6 +17,7 @@ const postback = (bot) => {
 
         msg_me.isOnline(fbID)
             .then(isOnline => {
+                console.log(`isOnline ${isOnline}\nType: ${typeof isOnline}`);
                 if (isOnline)
                     (msg_me.turnOffline(fbID)) ? chat.say("Turned you offline") : chat.say("Something went wrong tryagain");
                 else if (isOnline === false || isOnline === "false")
