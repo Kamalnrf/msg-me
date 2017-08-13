@@ -25,6 +25,26 @@ const setup = (bot) => {
             });
     });
 
+    bot.setPersistentMenu([
+        {
+            title: 'My username',
+            type: 'postback',
+            payload: 'myName'
+        },
+
+        {
+            title: 'Online/Offline',
+            type: 'postback',
+            payload: 'online/offline'
+        },
+
+        {
+            title: 'Start a conversation',
+            type: 'postback',
+            payload: 'start'
+        }
+    ]);
+
     console.log("Completed the basic setUp");
 };
 

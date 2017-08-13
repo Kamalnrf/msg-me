@@ -18,6 +18,7 @@ const msgMe = {
             redis.setKey(userName, fbID);
             redis.setKey(fbID + "isTexting", false);
             redis.setKey(fbID + "Texting", -1);
+            redis.setKey(fbID + "isOnline", true);
 
             return true;
         }catch (error){
@@ -101,6 +102,44 @@ const msgMe = {
      */
     conectedTo(senderID) {
         return redis.getKey(senderID + "Texting");
+    },
+
+    /**
+     * Returns whether the user is online or not.
+     * @param fbId
+     */
+    isOnline(fbId){
+        return redis.getKey(fbId + "isOnline");
+    },
+
+    /**
+     * Turns the user offline.
+     * @param fbId
+     * @returns {boolean}
+     */
+    turnOffline(fbId){
+        redis.setKey(fbId + "isOnline", false);
+
+        return true;
+    },
+
+    /**
+     * Turns the user online.
+     * @param fbID
+     * @returns {boolean}
+     */
+    turnOnline(fbID){
+        redis.setKey(fbID + "isOnline", true);
+
+        return true;
+    },
+
+    /**
+     * Returns the username of the facebook ID
+     * @param fbID
+     */
+    getMyName (fbID){
+        return redis.getKey(fbID);
     }
 };
 
