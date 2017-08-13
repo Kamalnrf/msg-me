@@ -20,7 +20,7 @@ const redisConfig = {
         port: 6379,
         host: process.env.REDIS_URL,
         pass: '',
-        db: 1
+        db: 3
     }
 };
 
