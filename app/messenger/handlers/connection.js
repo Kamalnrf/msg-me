@@ -33,7 +33,7 @@ const Connection = {
                                                 .then(conected => {
                                                     console.log(`Connected: ${conected}`);
                                                     //Checks if the user is not connected to anyone.
-                                                    if (conected !== true || conected !== "true")
+                                                    if (conected === false || conected === "false")
                                                         if (msg_me.connect(senderID, recieverID) === true) {
                                                             chat.say(`We have established connection between you and ${userName}.`);
                                                             bot.say(recieverID, `A connection has been established`);
