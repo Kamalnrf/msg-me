@@ -11,6 +11,8 @@ const newUser = require('./handlers/createUserOperator');
 const postback = (bot) => {
     //----------Online/Offline--------//
     bot.on('postback:online/offline', (payload, chat) => {
+        console.log(payload);
+
         const fbID = payload.sender.id;
 
         msg_me.isOnline(fbID)
@@ -31,6 +33,8 @@ const postback = (bot) => {
 
     //----------Start a conversation----//
     bot.on('postback:start', (payload, chat) => {
+        console.log(payload);
+
         const fbID = payload.sender.id;
 
         msg_me.isConnected(fbID)
@@ -56,6 +60,8 @@ const postback = (bot) => {
 
     //----------My User Name-----------//
     bot.on('postback:myName', (payload, chat) => {
+        console.log(payload);
+
         const fbID = payload.sender.id;
 
         msg_me.getMyName(fbID)
