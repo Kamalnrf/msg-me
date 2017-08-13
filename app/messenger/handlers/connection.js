@@ -19,11 +19,14 @@ const Connection = {
             msg_me.isExiting(userName)
                 .then(existense => {
                     //Checks if the usersname exists. if so finds the users fbID.
+                    console.log(`User existence ${existense}`);
                     if (existense)
                         msg_me.findUser(userName)
                             .then(recieverID => {
+                                console.log(`User recieverID ${recieverID}`);
                                 msg_me.isOnline(recieverID)
                                     .then(isOnline => {
+                                        console.log(`Is user online ${isOnline}`);
                                         //Checks whether the user is online.
                                         if (isOnline === 'true' || isOnline === true)
                                             msg_me.isConnected(recieverID)
