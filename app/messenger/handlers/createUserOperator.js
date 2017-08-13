@@ -20,7 +20,8 @@ const newUser = {
                     console.log(`Requested username Existence: ${existense}`);
                     if (existense === false){
                         if (msg_me.createUser(fbID, reqUserName) === true)
-                            convo.say(`Created your username.`);
+                            convo.say(`Created your username.`)
+                                .then(() => convo.end());
                         else
                             convo.say(`There was some problem while creating your username`);
                     }else

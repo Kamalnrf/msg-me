@@ -27,6 +27,7 @@ const Connection = {
                                             if (msg_me.connect(senderID, recieverID) === true) {
                                                 chat.say(`We have established connection between you and ${userName}.`);
                                                 bot.say(recieverID, `A connection has been established`);
+                                                convo.end();
                                             } else
                                                 convo.say("Something went wrong try again");
                                         else
