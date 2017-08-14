@@ -27,7 +27,7 @@ const msgMe = {
             });
 
             user.save((error, user) => {
-                if (err) return console.error(err);
+                if (error) return console.error(error);
 
                 console.log("User has been successfully saved to mongodb");
             });
