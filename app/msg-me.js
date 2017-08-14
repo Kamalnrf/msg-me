@@ -4,6 +4,7 @@
 'use strict';
 
 const redis = require('../services/redis');
+const userModel = require('../app/model/userModel');
 
 const msgMe = {
     /**
@@ -19,6 +20,17 @@ const msgMe = {
             redis.setKey(fbID + "isTexting", false);
             redis.setKey(fbID + "Texting", -1);
             redis.setKey(fbID + "isOnline", true);
+
+            const user = new userModel({
+                name: userName,
+                fbID: fbID
+            });
+
+            user.save((error, user) => {
+                if (err) return console.error(err);
+
+                console.log("User has been successfully saved to mongodb");
+            });
 
             return true;
         }catch (error){

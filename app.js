@@ -11,6 +11,7 @@ const redis = require('./services/redis');
 const setUp = require('./config/initializers/setup');
 const message = require('./app/messenger/message');
 const postbacks = require('./app/messenger/postback');
+const mongodb = require('./services/mongodb');
 
 nconf.use('memory');
 // Load Environment variables from .env file
@@ -31,6 +32,8 @@ global.bot = new BootBot({
 
 //Initializing redis.
 redis.init(nconf.get('redis'));
+
+mongodb(nconf.get('NODE_MONGODB' || process.env.NODE_MONGODB));
 
 //Basic setup such as getting started messages, persistent menu initialization and redis
 setUp(bot);

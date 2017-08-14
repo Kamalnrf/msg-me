@@ -58,6 +58,13 @@ const message = (bot) => {
             .catch(error => console.log(error));
     });
 
+    bot.on('attachment', (payload, chat) => {
+        console.log('An attachment was received!');
+        console.log(payload);
+        chat.say("We don't support sending attachments yet...");
+    });
+
+
     console.log("Listening to messages from user");
 
 };

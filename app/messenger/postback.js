@@ -49,7 +49,7 @@ const postback = (bot) => {
                             .catch(error => console.log(error));
                     });
                 else
-                    chat.say("You need to create a user name first.")
+                    chat.say("You need to create a username first.")
                         .then(() => {
                             chat.conversation((convo) => {
                                 convo.sendTypingIndicator(1000).then(() => newUser.createUser(convo, payload));
@@ -70,14 +70,14 @@ const postback = (bot) => {
                 if (userName !== null)
                     chat.say(userName);
                 else
-                    chat.say("You need to create a user name first.")
+                    chat.say("You need to create a username first.")
                         .then(() => {
                             chat.conversation((convo) => {
                                 convo.sendTypingIndicator(1000).then(() => newUser.createUser(convo, payload));
                             })
                         });
             })
-    })
+    });
 
     console.log(`Initialized the postbacks.`);
 };
