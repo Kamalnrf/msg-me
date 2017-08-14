@@ -16,7 +16,8 @@ const setup = (bot) => {
         console.log(`New user! \n ${payload}`);
         chat.getUserProfile()
             .then(user => {
-                chat.say("Hi " + user.first_name + ", Good to see you")
+                chat.say("Hi " + user.first_name + ", Good to see you." +
+                `\nIn this bot you can message your friends or anyone anonymously if you know their username.`)
                     .then(() => {
                         chat.conversation((convo) => {
                             convo.sendTypingIndicator(1000).then(() => newUser.createUser(convo, payload));

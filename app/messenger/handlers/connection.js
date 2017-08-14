@@ -10,7 +10,7 @@ const Connection = {
     estConnection (convo, payload, bot){
         console.log("Entered establishing connection");
 
-        const question = "Enter the username you want to connect with.";
+        const question = "Enter the users username you want to connect with.";
 
         const answer = (payload, chat) => {
             const userName = payload.message.text;
@@ -35,13 +35,13 @@ const Connection = {
                                                     //Checks if the user is not connected to anyone.
                                                     if (conected === false || conected === "false")
                                                         if (msg_me.connect(senderID, recieverID) === true) {
-                                                            chat.say(`We have established connection between you and ${userName}.`);
-                                                            bot.say(recieverID, `A connection has been established`);
+                                                            chat.say(`We have established connection between you and ${userName}.Now you can talk anonymously with ${userName}.\nIf at any point you feel like ending the conversation send 'end!'`);
+                                                            bot.say(recieverID, `A connection has been established between you and someone who wants to talk to you anonymously.\nIf at any point you feel like ending the conversation send 'end!'`);
                                                             convo.end();
                                                         } else
                                                             convo.say("Something went wrong try again");
                                                     else
-                                                        convo.say("The user you want to talk to is already in a conversation");
+                                                        convo.say("The user you want to talk to is already in a conversation.");
                                                 })
                                                 .catch(error => console.log(error));
                                         else

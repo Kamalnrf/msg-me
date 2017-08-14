@@ -31,7 +31,9 @@ const newUser = {
                 .catch(error => console.log(error));
         };
 
-        convo.ask(question, answer);
+        convo.say("It is important to have a username which is unique so that others will be able to recognize and message you " +
+            "anonymously.")
+            .then(() => convo.ask(question, answer));
     },
 };
 
