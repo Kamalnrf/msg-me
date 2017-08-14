@@ -22,7 +22,7 @@ const msgMe = {
             redis.setKey(fbID + "isOnline", true);
 
             const user = new userModel({
-                name: userName,
+                userName: userName,
                 fbID: fbID
             });
 
