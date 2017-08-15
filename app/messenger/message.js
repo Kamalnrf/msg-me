@@ -15,11 +15,9 @@ const message = (bot) => {
         const message = payload.message.text;
 
         if (message === '#help')
-            chat.say({
-                text: "#block - To block any user"+
+            chat.say("#block - To block any user"+
                 "\n#stop - To stop when you are in a conversation.(Note: doesn't work when you are not in a conversation" +
-                "\n#unblock - To unblock the user"
-            });
+                "\n#unblock - To unblock the user");
         else if (message === '#block')
             chat.say("Coming soon");
         else if (message === '#unblock')
