@@ -16,11 +16,10 @@ const setup = (bot) => {
         console.log(`New user! \n ${payload}`);
         chat.getUserProfile()
             .then(user => {
-                chat.say("Hi " + user.first_name + ", Good to see you." +
-                `\nIn this bot you can message your friends or anyone anonymously if you know their username.`)
+                chat.say(`Hi  ${user.first_name} Greetings for the day! My friends call me Chanon bot. I’m here to let you talk with your friends anonymously. At any point of conversation type “#help” to know secret keywords.`)
                     .then(() => {
                         chat.conversation((convo) => {
-                            convo.sendTypingIndicator(1000).then(() => newUser.createUser(convo, payload));
+                            convo.sendTypingIndicator(2000).then(() => newUser.createUser(convo, payload));
                         })
                     })
             });
@@ -43,6 +42,12 @@ const setup = (bot) => {
             title: 'Start a conversation',
             type: 'postback',
             payload: 'start'
+        },
+
+        {
+            title: 'Feedback',
+            type: 'postback',
+            payload: 'feedback'
         }
     ]);
 

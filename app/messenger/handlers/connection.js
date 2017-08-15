@@ -10,7 +10,7 @@ const Connection = {
     estConnection (convo, payload, bot){
         console.log("Entered establishing connection");
 
-        const question = "Enter the users username you want to connect with.";
+        const question = "Please Enter the username you want to talk to.";
 
         const answer = (payload, chat) => {
             const userName = payload.message.text;
@@ -37,16 +37,16 @@ const Connection = {
                                                         if (msg_me.connect(senderID, recieverID) === true) {
                                                             chat.say(`We have established connection between you and ${userName}.`)
                                                                 .then(() => chat.say(`If at any point you feel like ending the conversation send 'end!'`));
-                                                            bot.say(recieverID, `A connection has been established between you and someone who wants to talk to you anonymously.\nIf at any point you feel like ending the conversation send 'end!'`);
+                                                            bot.say(recieverID, `A connection has been established between you and someone who wants to talk to you anonymously.\nIf at any point you feel like ending the conversation send '#stop'`);
                                                             convo.end();
                                                         } else
                                                             convo.say("Something went wrong try again");
                                                     else
-                                                        convo.say("The user you want to talk to is already in a conversation.");
+                                                        convo.say(`We’re sorry! It looks like ${userName} is talking to someone else. Would you like to be notified when he is free to talk?`);
                                                 })
                                                 .catch(error => console.log(error));
                                         else
-                                            convo.say ("The user you are trying to ping is not available.")
+                                            convo.say (`We’re sorry! It looks like ${userName} is offline. Would you like to be notified when he is free to talk?`)
                                                 .then(() => convo.end());
                                     });
                             });

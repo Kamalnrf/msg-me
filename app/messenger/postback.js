@@ -7,6 +7,7 @@
 const msg_me = require('../msg-me');
 const connection = require('./handlers/connection');
 const newUser = require('./handlers/createUserOperator');
+const feedback = require('./handlers/feedback');
 
 const postback = (bot) => {
     //----------Online/Offline--------//
@@ -19,9 +20,9 @@ const postback = (bot) => {
             .then(isOnline => {
                 console.log(`isOnline ${isOnline}\nType: ${typeof isOnline}`);
                 if (isOnline === 'true')
-                    (msg_me.turnOffline(fbID)) ? chat.say("Turned you offline") : chat.say("Something went wrong tryagain");
+                    (msg_me.turnOffline(fbID)) ? chat.say("You’re now Online. Hold on! Any friend of yours maybe contacting you soon.") : chat.say("Something went wrong tryagain");
                 else if (isOnline === false || isOnline === "false")
-                    (msg_me.turnOnline(fbID)) ? chat.say("Turned you online") : chat.say("Something went wrong tryagain");
+                    (msg_me.turnOnline(fbID)) ? chat.say("You’re now Offline. Friends will not be able to connect with you. Please turn back to Online if you want to chat anonymously with your friends.") : chat.say("Something went wrong tryagain");
                 else
                     chat.say("You need to create a user name first.")
                         .then(() => {
@@ -68,7 +69,7 @@ const postback = (bot) => {
         msg_me.getMyName(fbID)
             .then(userName => {
                 if (userName !== null)
-                    chat.say(userName);
+                    chat.say(`Your username is ${userName}. Share it with your friends.`);
                 else
                     chat.say("You need to create a username first.")
                         .then(() => {
@@ -77,6 +78,15 @@ const postback = (bot) => {
                             })
                         });
             })
+    });
+
+    //----------Feedback----------//
+    bot.on('postback:feedback', (payload, chat) => {
+       console.log(payload);
+
+       chat.conversation(convo => {
+           convo.sendTypingIndicator(1000).then(() => feedback.sendFeedBack(payload, convo));
+       })
     });
 
     console.log(`Initialized the postbacks.`);

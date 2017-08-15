@@ -34,9 +34,9 @@ const message = (bot) => {
                             else {
                                 msg_me.conectedTo(payload.sender.id)
                                     .then(reciverID => {
-                                        if (message !== 'end!')
+                                        if (message !== '#stop')
                                             bot.say(reciverID, message);
-                                        else if (message === 'end!'){
+                                        else if (message === '#stop'){
                                             if (msg_me.disconnect(payload.sender.id, reciverID)){
                                                 bot.say(reciverID, "Your connection has been closed");
                                                 chat.say("Your connection has been closed");
@@ -61,6 +61,22 @@ const message = (bot) => {
         console.log('An attachment was received!');
         console.log(payload);
         chat.say("We don't support sending attachments yet...");
+    });
+
+    bot.hear('#help', (payload, chat) => {
+        chat.say({
+            text: "#block username - To block any user"+
+                "\n#stop - To stop when you are in a conversation.(Note: doesn't work when you are not in a conversation" +
+                "\n#unblock  username - To unblock the user"
+        })
+    });
+
+    bot.hear('#block', (payload, chat) => {
+        chat.say("Coming soon");
+    });
+
+    bot.hear('#unblock', (payload, chat) => {
+        chat.say("Coming soon");
     });
 
 
