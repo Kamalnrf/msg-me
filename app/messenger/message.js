@@ -34,7 +34,6 @@ const message = (bot) => {
                             else {
                                 msg_me.conectedTo(payload.sender.id)
                                     .then(reciverID => {
-                                        console.log()
                                         if (message !== 'end!')
                                             bot.say(reciverID, message);
                                         else if (message === 'end!'){
