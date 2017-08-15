@@ -90,6 +90,15 @@ const postback = (bot) => {
                             })
                         });
             })
+            .catch(error => {
+                console.log(error);
+                chat.say("You need to create a username first.")
+                    .then(() => {
+                        chat.conversation((convo) => {
+                            convo.sendTypingIndicator(1000).then(() => newUser.createUser(convo, payload));
+                        })
+                    });
+            })
     });
 
     //----------Feedback----------//

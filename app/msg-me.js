@@ -206,7 +206,13 @@ const msgMe = {
      * @param fbID
      */
     getMyName (fbID){
-        return redis.getKey(fbID);
+        return new Promise((resolve, reject) => {
+            redis.getHash(fbID)
+                .then(hash => {
+                    resolve(hash.userName);
+                })
+                .catch(error => reject(error));
+        });
     },
 
     /**
