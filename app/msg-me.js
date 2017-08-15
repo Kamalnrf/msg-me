@@ -164,7 +164,7 @@ const msgMe = {
     addQueue (fbID, reqUser) {
         redis.getHash(fbID+"list")
             .then(list => {
-                list.userQueue.push(reqUser);
+                list.userQueue += `,${reqUser}`;
                 redis.setHash(fbID + "list", list);
             });
     },
@@ -172,7 +172,7 @@ const msgMe = {
     addBlocked (fbID, blockingUser) {
         redis.getHash(fbID+"list")
             .then(list => {
-                list.usersBlocked.push(blockingUser);
+                list.usersBlocked += `,${blockingUser}`;
                 redis.setHash(fbID + "list", list);
             });
     },
