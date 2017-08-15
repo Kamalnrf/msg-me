@@ -52,7 +52,7 @@ const Connection = {
                                                                         } else
                                                                             convo.say("Something went wrong try again");
                                                                     else
-                                                                        convo.say (`We’re sorry! It looks like ${userName} is offline.`)
+                                                                        convo.say (`We’re sorry! It looks like ${userName} is connected with someone else.`)
                                                                             .then(() =>  convo.sendTypingIndicator(1000)
                                                                                 .then(() => queue.addQueue(convo, payload, recieverID))
                                                                                 .catch(error => console.log(error)));

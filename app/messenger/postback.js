@@ -19,7 +19,7 @@ const postback = (bot) => {
         msg_me.isOnline(fbID)
             .then(isOnline => {
                 console.log(`isOnline ${isOnline}\nType: ${typeof isOnline}`);
-                if (isOnline === 'true')
+                if (isOnline === 'true' || isOnline === true)
                     (msg_me.turnOffline(fbID)) ? chat.say("You’re now Offline. Friends will not be able to connect with you. Please turn back to Online if you want to chat anonymously with your friends.") : chat.say("Something went wrong tryagain");
                 else if (isOnline === false || isOnline === "false") {
                     (msg_me.turnOnline(fbID)) ? chat.say("You’re now Online. Hold on! Any friend of yours maybe contacting you soon.") : chat.say("Something went wrong tryagain");

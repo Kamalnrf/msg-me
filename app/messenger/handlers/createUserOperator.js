@@ -20,11 +20,14 @@ const newUser = {
                 .then(existense => {
                     console.log(`Requested username Existence: ${existense}`);
                     if (existense === false){
-                        if (msg_me.createUser(fbID, reqUserName) === true)
-                            convo.say(`Thanks for creating the username. Your username is ${reqUserName}. Share it among your friends!`)
-                                .then(() => convo.sendTypingIndicator(5000).then(() => connection.estConnection(convo, payload, bot)));
+                        if (checkRules(reqUserName))
+                            if (msg_me.createUser(fbID, reqUserName) === true)
+                                convo.say(`Thanks for creating the username. Your username is ${reqUserName}. Share it among your friends!`)
+                                    .then(() => convo.sendTypingIndicator(5000).then(() => connection.estConnection(convo, payload, bot)));
+                            else
+                                convo.say(`There was some problem while creating your username`);
                         else
-                            convo.say(`There was some problem while creating your username`);
+                            convo.say("Your ")
                     }else
                         convo.say(`We are sorry. It looks like this username is taken. Please try another one.`)
                             .then(() => this.createUser(convo, payload));
@@ -36,5 +39,14 @@ const newUser = {
             .then(() => convo.ask(question, answer));
     },
 };
+
+function checkRules (userName){
+    if (userName.length >= 5)
+        if (userName.indexOf(' ') <= 0)
+            if ((userName.search('.net') || userName.search('.com')) === -1)
+                return true;
+
+    return false;
+}
 
 module.exports = newUser;
