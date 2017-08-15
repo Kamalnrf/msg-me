@@ -163,8 +163,10 @@ const msgMe = {
 
     addQueue (fbID, reqUser) {
         redis.getHash(fbID+"list")
-            .then(data =>
-                console.log(data));
+            .then(list => {
+                list.userQueue.push(reqUser);
+                redis.setHash(fbID + "list", list);
+            });
     }
 };
 
