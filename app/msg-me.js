@@ -22,7 +22,7 @@ const msgMe = {
                 Texting: -1,
                 isOnline: true
             };
-            redis.setHash(fbID, JSON.stringify(userRedis));
+            redis.setHash(fbID, userRedis);
 
             const user = new userModel({
                 userName: userName,
