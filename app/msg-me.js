@@ -16,7 +16,6 @@ const msgMe = {
     createUser(fbID, userName) {
         try{
             redis.setKey(userName, fbID);
-            redis.setKey(fbID, userName);
 
             const fbIDUser = {
                 userName: userName,
@@ -61,12 +60,12 @@ const msgMe = {
      * @param userName
      * @returns {Promise}
      */
-    isExiting(userName) {
+    isExiting(userID) {
         return new Promise((resolve, reject) => {
-            redis.getKey(userName)
-                .then(fbID => resolve((fbID !== null)))
+            redis.getHash(userID)
+                .then(hash => resolve((hash.userName !== null)))
                 .catch(error => reject(error));
-        })
+        });
     },
 
     /**
