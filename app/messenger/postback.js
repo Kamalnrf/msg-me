@@ -28,7 +28,10 @@ const postback = (bot) => {
                         .then(queuedUsers => {
                             console.log(queuedUsers);
                             queuedUsers.map(element => {
-                                bot(element, "Your friend is back online.");
+                                msg_me.getMyName(element)
+                                    .then(name => {
+                                        bot.sendTextMessage(element, `${name}`);
+                                    })
                             })
                         });
                 }
