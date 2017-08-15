@@ -30,9 +30,9 @@ const postback = (bot) => {
                             queuedUsers.map(element => {
                                 msg_me.getMyName(element)
                                     .then(name => {
-                                        bot.sendTextMessage(element, `${name}`);
-                                    })
-                            })
+                                        bot.sendTextMessage(element, `${name} is online. Now you can connect with him.`);
+                                    });
+                            }).then(() => msg_me.removeQueuedUsers(fbID));
                         });
                 }
                 else

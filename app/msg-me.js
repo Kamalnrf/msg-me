@@ -161,6 +161,11 @@ const msgMe = {
         return redis.getKey(fbID);
     },
 
+    /**
+     * Adds the reqUser to fbId queuue
+     * @param fbID
+     * @param reqUser
+     */
     addQueue (fbID, reqUser) {
         redis.getHash(fbID+"list")
             .then(list => {
@@ -169,6 +174,11 @@ const msgMe = {
             });
     },
 
+    /**
+     * Adds the blockingUser to fbID
+     * @param fbID
+     * @param blockingUser
+     */
     addBlocked (fbID, blockingUser) {
         redis.getHash(fbID+"list")
             .then(list => {
@@ -177,6 +187,11 @@ const msgMe = {
             });
     },
 
+    /**
+     * Returns all the queued users of fbid
+     * @param fbID
+     * @returns {Promise}
+     */
     getAllQueuedUsers (fbID) {
         return new Promise((resolve, reject) => {
             redis.getHash(fbID+"list")
@@ -188,6 +203,11 @@ const msgMe = {
         })
     },
 
+    /**
+     * Returns all the blocked users.
+     * @param fbID
+     * @returns {Promise}
+     */
     getAllBlockedUsers (fbID) {
         return new Promise ((resolve, reject) => {
             redis.getHash(fbID+"list")
@@ -197,6 +217,11 @@ const msgMe = {
         })
     },
 
+    /**
+     * Removes all  the queued users of fbID.
+     * @param fbID
+     * @returns {Promise}
+     */
     removeQueuedUsers (fbID) {
         return new Promise ((resolve, reject) => {
             redis.getHash(fbID+"list")
@@ -212,16 +237,27 @@ const msgMe = {
         })
     },
 
+    /***
+     * unblocks the blockedID from snederID.
+     * @param senderID
+     * @param blockedID
+     * @returns {Promise}
+     */
     unBlock (senderID, blockedID){
         return new Promise((resolve, reject) => {
             redis.getHash(senderID + "list")
                 .then(list => {
-                    list.usersBlocked = list.usersBlocked.map((element => element !== ',' + blockedID));
+                    list.usersBlocked = list.usersBlocked.split(',').filter((element => element !== blockedID));
 
                     redis.setHash(senderID + 'list', list);
                 })
         })
+    },
+
+    getFBID (userName) {
+        return redis.getKey(userName);
     }
+
 };
 
 module.exports = msgMe;

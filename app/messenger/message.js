@@ -7,6 +7,7 @@
 const newUser = require('./handlers/createUserOperator');
 const msg_me = require('../msg-me');
 const connection = require('./handlers/connection');
+const block = require('./handlers/block');
 
 const message = (bot) => {
 
@@ -19,9 +20,17 @@ const message = (bot) => {
                 "\n#stop - To stop when you are in a conversation.(Note: doesn't work when you are not in a conversation)" +
                 "\n#unblock - To unblock the user");
         else if (message === '#block')
-            chat.say("Coming soon");
+            chat.conversation((convo) => {
+                convo.sendTypingIndicator(1000)
+                    .then(() => block.blockUser(convo, payload))
+                    .catch(error => console.log(error));
+            });
         else if (message === '#unblock')
-            chat.say("Coming soon");
+            chat.conversation((convo) => {
+                convo.sendTypingIndicator(1000)
+                    .then(() => block.unblockUser(convo, payload))
+                    .catch(error => console.log(error));
+            });
         else
             msg_me.isExiting(payload.sender.id)
             .then(existence => {
