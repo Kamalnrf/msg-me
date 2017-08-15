@@ -21,6 +21,13 @@ const msgMe = {
             redis.setKey(fbID + "Texting", -1);
             redis.setKey(fbID + "isOnline", true);
 
+            const list = {
+                userQueue: [],
+                usersBlocked: ['kamalnrf']
+            };
+
+            redis.setHash(fbID + "list", list);
+
             const user = new userModel({
                 userName: userName,
                 fbID: fbID
@@ -152,6 +159,10 @@ const msgMe = {
      */
     getMyName (fbID){
         return redis.getKey(fbID);
+    },
+
+    addQueue (fbID) {
+        return
     }
 };
 
