@@ -10,6 +10,22 @@ const connection = require('./handlers/connection');
 
 const message = (bot) => {
 
+    bot.hear('#help', (payload, chat) => {
+        chat.say({
+            text: "#block username - To block any user"+
+            "\n#stop - To stop when you are in a conversation.(Note: doesn't work when you are not in a conversation" +
+            "\n#unblock  username - To unblock the user"
+        })
+    });
+
+    bot.hear('#block', (payload, chat) => {
+        chat.say("Coming soon");
+    });
+
+    bot.hear('#unblock', (payload, chat) => {
+        chat.say("Coming soon");
+    });
+
     bot.on('message', (payload, chat) => {
         console.log(payload);
         const message = payload.message.text;
@@ -61,22 +77,6 @@ const message = (bot) => {
         console.log('An attachment was received!');
         console.log(payload);
         chat.say("We don't support sending attachments yet...");
-    });
-
-    bot.hear('#help', (payload, chat) => {
-        chat.say({
-            text: "#block username - To block any user"+
-                "\n#stop - To stop when you are in a conversation.(Note: doesn't work when you are not in a conversation" +
-                "\n#unblock  username - To unblock the user"
-        })
-    });
-
-    bot.hear('#block', (payload, chat) => {
-        chat.say("Coming soon");
-    });
-
-    bot.hear('#unblock', (payload, chat) => {
-        chat.say("Coming soon");
     });
 
 
