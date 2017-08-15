@@ -82,5 +82,4 @@ const Connection = {
         convo.ask(question, answer);
     }
 };
-
 module.exports = Connection;

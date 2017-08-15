@@ -60,6 +60,8 @@ const message = (bot) => {
                                             if (msg_me.disconnect(payload.sender.id, reciverID)){
                                                 bot.say(reciverID, "Your connection has been closed");
                                                 chat.say("Your connection has been closed");
+
+                                                unQueue(payload.sender.id, reciverID);
                                             }
                                         }
                                     }).catch(error => console.log(error));
@@ -95,5 +97,30 @@ const message = (bot) => {
     console.log("Listening to messages from user");
 
 };
+
+function unQueue (senderID, recieverID){
+    msg_me.getAllQueuedUsers(senderID)
+        .then(queuedUsers => {
+            console.log(queuedUsers);
+            queuedUsers.map(element => {
+                msg_me.getMyName(element)
+                    .then(name => {
+                        bot.sendTextMessage(element, `${name} is now ready to connect.`);
+                    });
+            }).then(() => msg_me.removeQueuedUsers(senderID));
+        });
+
+    msg_me.getAllQueuedUsers(recieverID)
+        .then(queuedUsers => {
+            console.log(queuedUsers);
+            queuedUsers.map(element => {
+                msg_me.getMyName(element)
+                    .then(name => {
+                        bot.sendTextMessage(element, `${name} is now ready to connect.`);
+                    });
+            }).then(() => msg_me.removeQueuedUsers(recieverID));
+        });
+}
+
 
 module.exports = message;

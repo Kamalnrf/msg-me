@@ -10,7 +10,7 @@ const newUser = {
     createUser (convo, payload){
         console.log("Creating new user");
 
-        const question = "Please type a username you want to create for yourself.";
+        const question = "Enter your unique user ID";
 
         const answer = (payload, chat) => {
             const fbID = payload.sender.id;
@@ -35,7 +35,7 @@ const newUser = {
                 .catch(error => console.log(error));
         };
 
-        convo.say("First, To get started you need to Create your Id. ;)")
+        convo.say("First, To get started you need to Create your User Id. ;)")
             .then(() => convo.ask(question, answer));
     },
 };
