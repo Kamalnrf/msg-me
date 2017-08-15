@@ -17,7 +17,7 @@ const Connection = {
             const userName = payload.message.text;
             const senderID = payload.sender.id;
 
-            msg_me.isExiting(userName)
+            msg_me.isExitingUser(userName)
                 .then(existense => {
                     //Checks if the usersname exists. if so finds the users fbID.
                     console.log(`User existence ${existense}`);
