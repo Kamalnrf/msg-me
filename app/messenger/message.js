@@ -74,7 +74,15 @@ const message = (bot) => {
                             })
                         })
             })
-            .catch(error => console.log(error));
+            .catch(error => {
+                console.log(error)
+                chat.say("It seems you haven't created a username for you yet.")
+                    .then(() => {
+                        chat.conversation((convo) => {
+                            convo.sendTypingIndicator(1000).then(() => newUser.createUser(convo, payload));
+                        })
+                    })
+            });
     });
 
     bot.on('attachment', (payload, chat) => {
