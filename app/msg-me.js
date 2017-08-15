@@ -181,6 +181,7 @@ const msgMe = {
         return new Promise((resolve, reject) => {
             redis.getHash(fbID+"list")
                 .then(list => {
+                    console.log(list.userQueue);
                     console.log(list.userQueue.split[',']);
                     resolve(list.userQueue.split[','])
                 });
@@ -215,14 +216,7 @@ const msgMe = {
         return new Promise((resolve, reject) => {
             redis.getHash(senderID + "list")
                 .then(list => {
-                    const blockedUsers = list.blockedUsers.map((element => {
-                        if (element === ',' + blockedID)
-                            return false;
-                        else
-                            return true;
-                    }));
-
-                    list.blockedUsers = blockedUsers;
+                    list.usersBlocked = list.usersBlocked.map((element => element !== ',' + blockedID));
 
                     redis.setHash(senderID + 'list', list);
                 })
