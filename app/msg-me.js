@@ -15,18 +15,19 @@ const msgMe = {
      */
     createUser(fbID, userName) {
         try{
-            redis.setKey(fbID, userName);
             redis.setKey(userName, fbID);
-            redis.setKey(fbID + "isTexting", false);
-            redis.setKey(fbID + "Texting", -1);
-            redis.setKey(fbID + "isOnline", true);
 
-            const list = {
+            const fbIDUser = {
+                userName: userName,
+                isTexting: false,
+                texting: false,
+                isOnline: true,
                 userQueue: ['def'],
                 usersBlocked: ['def']
             };
 
-            redis.setHash(fbID + "list", list);
+            redis.setHash(fbID, fbIDUser);
+
 
             const user = new userModel({
                 userName: userName,
@@ -75,10 +76,17 @@ const msgMe = {
      */
     connect(senderID, recieverID) {
         try {
-            redis.setKey(senderID + "isTexting", true);
-            redis.setKey(recieverID + "isTexting", true);
-            redis.setKey(senderID + "Texting", recieverID);
-            redis.setKey(recieverID + "Texting", senderID);
+            redis.getHash(senderID)
+                .then(senderHash => redis.getHash(recieverID)
+                    .then(reciverHash => {
+                        senderHash.isTexting = true;
+                        reciverHash.isTexting = true;
+                        senderHash.texting = recieverID;
+                        reciverHash.texting = senderID;
+
+                        redis.setHash(senderID, senderHash);
+                        redis.setHash(recieverID, reciverHash);
+                    }));
 
             return true;
         } catch (error) {
@@ -95,10 +103,17 @@ const msgMe = {
      */
     disconnect(senderID, recieverID) {
         try {
-            redis.setKey(senderID + "isTexting", false);
-            redis.setKey(recieverID + "isTexting", false);
-            redis.setKey(senderID + "Texting", -1);
-            redis.setKey(recieverID + "Texting", -1);
+            redis.getHash(senderID)
+                .then(senderHash => redis.getHash(recieverID)
+                    .then(reciverHash => {
+                        senderHash.isTexting = false;
+                        reciverHash.isTexting = false;
+                        senderHash.texting = -1;
+                        reciverHash.texting = -1;
+
+                        redis.setHash(senderID, senderHash);
+                        redis.setHash(recieverID, reciverHash);
+                    }));
 
             return true;
         } catch (error) {
@@ -112,7 +127,13 @@ const msgMe = {
      * @param fbID
      */
     isConnected(fbID) {
-        return redis.getKey(fbID + "isTexting");
+        return new Promise((resolve, reject) => {
+            redis.getHash(fbID)
+                .then(hash => {
+                    resolve(hash.isTexting);
+                })
+                .catch(error => reject(error))
+        });
     },
 
     /**
@@ -120,7 +141,13 @@ const msgMe = {
      * @param senderID
      */
     conectedTo(senderID) {
-        return redis.getKey(senderID + "Texting");
+        return new Promise((resolve, reject) => {
+            redis.getHash(senderID)
+                .then(hash => {
+                    resolve(hash.texting);
+                })
+                .catch(error => reject(error))
+        });
     },
 
     /**
@@ -128,7 +155,13 @@ const msgMe = {
      * @param fbId
      */
     isOnline(fbId){
-        return redis.getKey(fbId + "isOnline");
+        return new Promise((resolve, reject) => {
+            redis.getHash(fbId)
+                .then(hash => {
+                    resolve(hash.isOnline);
+                })
+                .catch(error => reject(error))
+        });
     },
 
     /**
@@ -137,7 +170,10 @@ const msgMe = {
      * @returns {boolean}
      */
     turnOffline(fbId){
-        redis.setKey(fbId + "isOnline", false);
+        redis.getHash(fbId)
+            .then(hash => {
+                hash.isOnline = false;
+            });
 
         return true;
     },
@@ -148,7 +184,10 @@ const msgMe = {
      * @returns {boolean}
      */
     turnOnline(fbID){
-        redis.setKey(fbID + "isOnline", true);
+        redis.getHash(fbID)
+            .then(hash => {
+                hash.isOnline = false;
+            });
 
         return true;
     },
