@@ -10,7 +10,7 @@ let isRedis = false;
 // Redis client object
 let client;
 
-let methods = ['eval', 'del', 'hdel', 'expire', 'get', 'set', 'del', 'keys', 'hmset'];
+let methods = ['eval', 'del', 'hdel', 'expire', 'get', 'set', 'del', 'keys', 'hmset', 'hgetall'];
 
 function createClientQ(client) {
     methods.forEach(function (method) {
@@ -55,8 +55,12 @@ exports.init = function initRedis(config) {
     client = createClient(config.redis);
 };
 
-exports.setHash = function (hashName, jsonObject) {
-    return client.hmsetQ(hashName, jsonObject)
+exports.setHash = function (hashName, object) {
+    return client.hmsetQ(hashName, object)
+};
+
+exports.getHash = function (hashName) {
+    return client.hgetall(hashName);
 };
 
 // Deletes hash from Redis

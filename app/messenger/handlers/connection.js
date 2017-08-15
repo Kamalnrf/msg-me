@@ -5,6 +5,7 @@
 'use strict';
 
 const msg_me = require('../../msg-me');
+const queue = require('./queue');
 
 const Connection = {
     estConnection (convo, payload, bot){
@@ -42,12 +43,17 @@ const Connection = {
                                                         } else
                                                             convo.say("Something went wrong try again");
                                                     else
-                                                        convo.say(`We’re sorry! It looks like ${userName} is talking to someone else. Would you like to be notified when he is free to talk?`);
+                                                        convo.say (`We’re sorry! It looks like ${userName} is offline.`)
+                                                            .then(() =>  convo.sendTypingIndicator(1000)
+                                                                .then(() => queue.addQueue(convo, payload, recieverID))
+                                                                .catch(error => console.log(error)));
                                                 })
                                                 .catch(error => console.log(error));
                                         else
-                                            convo.say (`We’re sorry! It looks like ${userName} is offline. Would you like to be notified when he is free to talk?`)
-                                                .then(() => convo.end());
+                                            convo.say (`We’re sorry! It looks like ${userName} is offline.`)
+                                                .then(() =>  convo.sendTypingIndicator(1000)
+                                                    .then(() => queue.addQueue(convo, payload, recieverID))
+                                                    .catch(error => console.log(error)));
                                     });
                             });
                     else {
