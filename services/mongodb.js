@@ -12,6 +12,8 @@ const mongoDb = (url) => {
         if (!error)
             console.log("Connectedd to mongodb");
     });
+
+
 };
 
 module.exports = mongoDb;

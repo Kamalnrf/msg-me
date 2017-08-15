@@ -5,12 +5,12 @@
 const Q = require('q');
 const redis = require('redis');
 
-var isRedis = false;
+let isRedis = false;
 
 // Redis client object
-var client;
+let client;
 
-var methods = ['eval', 'del', 'hdel', 'expire', 'get', 'set', 'del', 'keys'];
+let methods = ['eval', 'del', 'hdel', 'expire', 'get', 'set', 'del', 'keys'];
 
 function createClientQ(client) {
     methods.forEach(function (method) {
@@ -53,6 +53,10 @@ exports.redisIsReady = function () {
 // Initializing DB
 exports.init = function initRedis(config) {
     client = createClient(config.redis);
+};
+
+exports.setHash = function (hashName, jsonObject) {
+    return client.hmsetQ(hashName, jsonObject)
 };
 
 
