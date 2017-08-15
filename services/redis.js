@@ -56,7 +56,7 @@ exports.init = function initRedis(config) {
 };
 
 exports.setHash = function (hashName, jsonObject) {
-    return client.hmsetQ(hashName, jsonObject)
+    return client.hmset(hashName, jsonObject)
 };
 
 
