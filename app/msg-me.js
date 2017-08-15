@@ -57,15 +57,23 @@ const msgMe = {
 
     /**
      * Returns a promise which has userName existence boolean.
-     * @param userName
+     * @param userID
      * @returns {Promise}
      */
     isExiting(userID) {
         return new Promise((resolve, reject) => {
             redis.getHash(userID)
-                .then(hash => resolve((hash.userName !== null)))
+                .then(hash => resolve((hash !== null)))
                 .catch(error => reject(error));
         });
+    },
+
+    isExitingUser(userName) {
+        return new Promise((resolve, reject) => {
+            redis.getKey(userName)
+                .then(fbID => resolve((fbID !== null)))
+                .catch(error => reject(error));
+        })
     },
 
     /**

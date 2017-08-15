@@ -16,7 +16,7 @@ const newUser = {
             const fbID = payload.sender.id;
             const reqUserName = payload.message.text;
 
-            msg_me.isExiting(reqUserName)
+            msg_me.isExitingUser(reqUserName)
                 .then(existense => {
                     console.log(`Requested username Existence: ${existense}`);
                     if (existense === false){
