@@ -75,7 +75,7 @@ const message = (bot) => {
                         })
             })
             .catch(error => {
-                console.log(error)
+                console.log(error);
                 chat.say("It seems you haven't created a username for you yet.")
                     .then(() => {
                         chat.conversation((convo) => {

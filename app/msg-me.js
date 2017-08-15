@@ -21,6 +21,7 @@ const msgMe = {
                 userName: userName,
                 isTexting: false,
                 texting: -1,
+                lastMessage: -1,
                 isOnline: true,
                 userQueue: ['def'],
                 usersBlocked: ['def'],

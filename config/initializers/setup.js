@@ -27,12 +27,6 @@ const setup = (bot) => {
 
     bot.setPersistentMenu([
         {
-            title: 'My username',
-            type: 'postback',
-            payload: 'myName'
-        },
-
-        {
             title: 'Online/Offline',
             type: 'postback',
             payload: 'online/offline'
@@ -45,9 +39,21 @@ const setup = (bot) => {
         },
 
         {
-            title: 'Feedback',
-            type: 'postback',
-            payload: 'feedback'
+            title: 'more',
+            type: 'nested',
+            call_to_actions: [
+                {
+                    title: 'My username',
+                    type: 'postback',
+                    payload: 'myName'
+                },
+
+                {
+                    title: 'FeedBack',
+                    type: 'postback',
+                    payload: 'feedback'
+                }
+            ]
         }
     ]);
 

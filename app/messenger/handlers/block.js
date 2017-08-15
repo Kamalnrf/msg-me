@@ -11,11 +11,11 @@ const block = {
         const question = "Enter the username you want to block.";
 
         const answer = (payload, chat) => {
-            const userId = payload.message.text;
+            const userName = payload.message.text;
             const blockerID = payload.sender.id;
 
-            msg_me.getFBID(userId)
-                .then(userName => {
+            msg_me.getFBID(userName)
+                .then(userId => {
                     msg_me.addBlocked(blockerID, userId);
                     convo.say(`Blocked the users ${userName}, from messaging you.`)
                         .then(() => convo.end());
