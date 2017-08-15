@@ -22,7 +22,7 @@ const msgMe = {
             redis.setKey(fbID + "isOnline", true);
 
             const list = {
-                userQueue: [],
+                userQueue: ['list', 'black'],
                 usersBlocked: ['kamalnrf']
             };
 
@@ -167,6 +167,32 @@ const msgMe = {
                 list.userQueue.push(reqUser);
                 redis.setHash(fbID + "list", list);
             });
+    },
+
+    addBlocked (fbID, blockingUser) {
+        redis.getHash(fbID+"list")
+            .then(list => {
+                list.usersBlocked.push(blockingUser);
+                redis.setHash(fbID + "list", list);
+            });
+    },
+
+    getAllQueuedUsers (fbID) {
+        return new Promise((resolve, reject) => {
+            redis.getHash(fbID+"list")
+                .then(list => {
+                    resolve(list.userQueue)
+                });
+        })
+    },
+
+    getAllBlockedUsers (fbID) {
+        return new Promise ((resolve, reject) => {
+            redis.getHash(fbID+"list")
+                .then(list => {
+                    resolve(list.usersBlocked)
+                });
+        })
     }
 };
 
