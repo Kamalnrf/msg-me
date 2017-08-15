@@ -18,11 +18,12 @@ const queue = {
 
             if (reply === 'Yes' || reply === 'yes')
                 msg_me.addQueue(senderID, reqUser)
-                    .then(() => convo.end());
+                    .then(() => convo.say("You will be notified when the user is back online")
+                        .then(() => convo.end()));
             else
                 convo.say("OK")
                     .then(() => convo.end());
-        }
+        };
 
         convo.ask(question, answer);
     }
