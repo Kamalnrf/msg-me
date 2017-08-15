@@ -182,8 +182,8 @@ const msgMe = {
             redis.getHash(fbID+"list")
                 .then(list => {
                     console.log(list.userQueue);
-                    console.log(list.userQueue.split[',']);
-                    resolve(list.userQueue.split[','])
+                    console.log(list.userQueue.split(','));
+                    resolve(list.userQueue.split(','))
                 });
         })
     },
@@ -192,7 +192,7 @@ const msgMe = {
         return new Promise ((resolve, reject) => {
             redis.getHash(fbID+"list")
                 .then(list => {
-                    resolve(list.usersBlocked.split[','])
+                    resolve(list.usersBlocked.split(','))
                 });
         })
     },
