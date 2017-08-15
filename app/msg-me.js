@@ -206,10 +206,10 @@ const msgMe = {
      * @param reqUser
      */
     addQueue (fbID, reqUser) {
-        redis.getHash(fbID+"list")
+        redis.getHash(fbID)
             .then(list => {
                 list.userQueue += `,${reqUser}`;
-                redis.setHash(fbID + "list", list);
+                redis.setHash(fbID , list);
             });
     },
 
@@ -219,10 +219,10 @@ const msgMe = {
      * @param blockingUser
      */
     addBlocked (fbID, blockingUser) {
-        redis.getHash(fbID+"list")
-            .then(list => {
-                list.usersBlocked += `,${blockingUser}`;
-                redis.setHash(fbID + "list", list);
+        redis.getHash(fbID)
+            .then(hash => {
+                hash.usersBlocked += `,${blockingUser}`;
+                redis.setHash(fbID , hash);
             });
     },
 
@@ -233,11 +233,9 @@ const msgMe = {
      */
     getAllQueuedUsers (fbID) {
         return new Promise((resolve, reject) => {
-            redis.getHash(fbID+"list")
-                .then(list => {
-                    console.log(list.userQueue);
-                    console.log(list.userQueue.split(','));
-                    resolve(list.userQueue.split(','))
+            redis.getHash(fbID)
+                .then(hash => {
+                    resolve(hash.userQueue.split(','))
                 });
         })
     },
@@ -249,9 +247,9 @@ const msgMe = {
      */
     getAllBlockedUsers (fbID) {
         return new Promise ((resolve, reject) => {
-            redis.getHash(fbID+"list")
-                .then(list => {
-                    resolve(list.usersBlocked.split(','))
+            redis.getHash(fbID)
+                .then(hash => {
+                    resolve(hash.usersBlocked.split(','))
                 });
         })
     },
@@ -263,14 +261,11 @@ const msgMe = {
      */
     removeQueuedUsers (fbID) {
         return new Promise ((resolve, reject) => {
-            redis.getHash(fbID+"list")
-                .then(list => {
-                    const newList = {
-                        userQueue: ['def'],
-                        usersBlocked: list.usersBlocked
-                    };
+            redis.getHash(fbID)
+                .then(hash => {
+                    hash.userQueue = ['def'];
 
-                    redis.setHash(fbID + "list", newList)
+                    redis.setHash(fbID , hash);
                     resolve(true);
                 });
         })
@@ -284,11 +279,11 @@ const msgMe = {
      */
     unBlock (senderID, blockedID){
         return new Promise((resolve, reject) => {
-            redis.getHash(senderID + "list")
-                .then(list => {
-                    list.usersBlocked = list.usersBlocked.split(',').filter((element => element !== blockedID));
+            redis.getHash(senderID)
+                .then(hash => {
+                    hash.usersBlocked = hash.usersBlocked.split(',').filter((element => element !== blockedID));
 
-                    redis.setHash(senderID + 'list', list);
+                    redis.setHash(senderID , list);
                 })
         })
     },
