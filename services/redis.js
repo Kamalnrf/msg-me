@@ -60,7 +60,7 @@ exports.setHash = function (hashName, object) {
 };
 
 exports.getHash = function (hashName) {
-    return client.hgetall(hashName);
+    return client.hgetallQ(hashName);
 };
 
 // Deletes hash from Redis
