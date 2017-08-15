@@ -86,6 +86,7 @@ const msgMe = {
 
                         redis.setHash(senderID, senderHash);
                         redis.setHash(recieverID, reciverHash);
+                        console.log("Completed changing th db value");
                     }));
 
             return true;
