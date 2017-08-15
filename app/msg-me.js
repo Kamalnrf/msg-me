@@ -20,10 +20,11 @@ const msgMe = {
             const fbIDUser = {
                 userName: userName,
                 isTexting: false,
-                texting: false,
+                texting: -1,
                 isOnline: true,
                 userQueue: ['def'],
-                usersBlocked: ['def']
+                usersBlocked: ['def'],
+                onHold: -1
             };
 
             redis.setHash(fbID, fbIDUser);
@@ -305,6 +306,17 @@ const msgMe = {
 
     getFBID (userName) {
         return redis.getKey(userName);
+    },
+
+    isBlocked (senderID, reciverID){
+        return new Promise((resolve, reject) => {
+            redis.getHash(reciverID)
+                .then(hash => {
+                    const blockedUsers = hash.usersBlocked;
+
+                    return blockedUsers.split(',').filter(element => element === senderID).length !== 0;
+                })
+        })
     }
 
 };
