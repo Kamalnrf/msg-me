@@ -16,12 +16,12 @@ const block = {
 
             msg_me.getFBID(userName)
                 .then(userId => {
-                    msg_me.addBlocked(blockerID, userName);
-                    convo.say(`Blocked the user ${userId}, from messaging you.`)
+                    msg_me.addBlocked(blockerID, userId);
+                    convo.say(`Blocked the users ${userName}, from messaging you.`)
                         .then(() => convo.end());
                     msg_me.getMyName(blockerID)
                         .then(name => {
-                            bot.sendTextMessage(userName, `You have been blocked to message ${name} `);
+                            bot.sendTextMessage(userId, `You have been blocked to message ${name} `);
                         });
                 });
         };
