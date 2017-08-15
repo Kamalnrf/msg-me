@@ -314,8 +314,9 @@ const msgMe = {
                 .then(hash => {
                     const blockedUsers = hash.usersBlocked;
 
-                    return blockedUsers.split(',').filter(element => element === senderID).length !== 0;
+                    resolve( blockedUsers.split(',').filter(element => element === senderID).length !== 0);
                 })
+                .catch(errors => reject(errors));
         })
     }
 

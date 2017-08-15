@@ -21,14 +21,13 @@ const Connection = {
                 .then(existense => {
                     //Checks if the usersname exists. if so finds the users fbID.
                     console.log(`User existence ${existense}`);
-                    if (existense)
+                    if (existense === 'true' || existense === true)
                         msg_me.findUser(userName)
                             .then(recieverID => {
                                 console.log(`User recieverID ${recieverID}`);
-
                                 msg_me.isBlocked(senderID, recieverID)
                                     .then(isBlocked => {
-                                        if (isBlocked === true)
+                                        if (isBlocked === false)
                                             msg_me.isOnline(recieverID)
                                                 .then(isOnline => {
                                                     console.log(`Is user online ${isOnline}`);
@@ -59,9 +58,12 @@ const Connection = {
                                                                 .then(() => queue.addQueue(convo, payload, recieverID))
                                                                 .catch(error => console.log(error)));
                                                 });
-                                        else if (isBlocked === false)
+                                        else if (isBlocked === true)
                                             convo.say(`I'm sorry this user has blocked you`);
                                     })
+                            })
+                            .catch(errors => {
+                                console.log(errors);
                             });
                     else {
                         convo.say("There is no such user, try entering again.")
