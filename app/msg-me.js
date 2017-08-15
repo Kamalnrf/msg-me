@@ -15,19 +15,15 @@ const msgMe = {
      */
     createUser(fbID, userName) {
         try{
+            redis.setKey(fbID, userName);
             redis.setKey(userName, fbID);
-            const userRedis = {
-                userName: userName,
-                isTexting: false,
-                Texting: -1,
-                isOnline: true
-            };
-            redis.setHash(fbID, userRedis);
+            redis.setKey(fbID + "isTexting", false);
+            redis.setKey(fbID + "Texting", -1);
+            redis.setKey(fbID + "isOnline", true);
 
             const user = new userModel({
                 userName: userName,
-                fbID: fbID,
-                blockedUsers: []
+                fbID: fbID
             });
 
             user.save((error, user) => {
@@ -156,16 +152,6 @@ const msgMe = {
      */
     getMyName (fbID){
         return redis.getKey(fbID);
-    },
-
-
-    blockUser (blockerID, userName, userFbID){
-        userModel.findOne({fbID: blockerID}, (errors, user) => {
-            user.blockedUsers.push({
-                userName: userName,
-                fbID: userFbID
-            });
-        })
     }
 };
 

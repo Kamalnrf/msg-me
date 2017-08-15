@@ -59,6 +59,10 @@ exports.setHash = function (hashName, jsonObject) {
     return client.hmset(hashName, jsonObject)
 };
 
+exports.getHash = function (hashName){
+  return client.hgetallAsync(hashName);
+};
+
 
 // Deletes hash from Redis
 exports.deleteHash = function (hashName) {
