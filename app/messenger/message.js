@@ -10,27 +10,22 @@ const connection = require('./handlers/connection');
 
 const message = (bot) => {
 
-    bot.hear('#help', (payload, chat) => {
-        chat.say({
-            text: "#block username - To block any user"+
-            "\n#stop - To stop when you are in a conversation.(Note: doesn't work when you are not in a conversation" +
-            "\n#unblock  username - To unblock the user"
-        })
-    });
-
-    bot.hear('#block', (payload, chat) => {
-        chat.say("Coming soon");
-    });
-
-    bot.hear('#unblock', (payload, chat) => {
-        chat.say("Coming soon");
-    });
-
     bot.on('message', (payload, chat) => {
         console.log(payload);
         const message = payload.message.text;
 
-        msg_me.isExiting(payload.sender.id)
+        if (message === '#help')
+            chat.say({
+                text: "#block - To block any user"+
+                "\n#stop - To stop when you are in a conversation.(Note: doesn't work when you are not in a conversation" +
+                "\n#unblock - To unblock the user"
+            });
+        else if (message === '#block')
+            chat.say("Coming soon");
+        else if (message === '#unblock')
+            chat.say("Coming soon");
+        else
+            msg_me.isExiting(payload.sender.id)
             .then(existence => {
                 if (existence === true ) {
                     msg_me.isConnected(payload.sender.id)
