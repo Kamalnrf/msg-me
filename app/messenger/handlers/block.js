@@ -51,3 +51,5 @@ const block = {
         convo.ask(question, answer);
     }
 };
+
+module.exports = block;

@@ -52,6 +52,7 @@ const message = (bot) => {
                             else {
                                 msg_me.conectedTo(payload.sender.id)
                                     .then(reciverID => {
+                                        console.log('Sending message');
                                         if (message !== '#stop')
                                             bot.say(reciverID, message);
                                         else if (message === '#stop'){
