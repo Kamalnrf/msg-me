@@ -363,6 +363,9 @@ const msgMe = {
                             const senderLstMsg = senderHash.lastMessage;
                             const reciverLstMsg = senderHash.lastMessage;
 
+                            console.log(senderLstMsg);
+                            console.log(reciverLstMsg);
+
                             if (senderLstMsg >= reciecerHash) {
                                 console.log(senderLstMsg - reciverLstMsg);
                                 resolve((senderLstMsg - reciverLstMsg) >= 5 || (senderLstMsg - reciverLstMsg) < 0);
