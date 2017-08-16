@@ -246,7 +246,7 @@ const msgMe = {
         redis.getHash(reqUser)
             .then(list => {
                 list.userQueue += `,${fbID}`;
-                redis.setHash(fbID , list);
+                redis.setHash(reqUser , list);
             });
     },
 
