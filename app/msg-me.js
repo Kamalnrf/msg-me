@@ -96,6 +96,8 @@ const msgMe = {
 
                         redis.setHash(senderID, senderHash);
                         redis.setHash(recieverID, reciverHash);
+
+                        this.addToConnected(senderID);
                         console.log("Completed changing th db value");
                     }));
 
@@ -124,6 +126,9 @@ const msgMe = {
 
                         redis.setHash(senderID, senderHash);
                         redis.setHash(recieverID, reciverHash);
+
+                        this.removeConnected(senderID);
+                        this.removeConnected(recieverID);
                     }));
 
             return true;
@@ -142,10 +147,13 @@ const msgMe = {
             })
     },
 
-    removeToConnected (senderID) {
+    removeConnected (senderID) {
         redis.getKey('connectedList')
             .then(conList => {
+                const list = conList.split(',')
+                    .filter(element => element !== senderID);
 
+                redis.setKey('connectedList', list);
             })
     },
 
@@ -339,6 +347,28 @@ const msgMe = {
                 })
                 .catch(errors => reject(errors));
         })
+    },
+
+     isIdle (senderID, reciecerID) {
+        return new Promise ((resolve, reject) => {
+            redis.getHash(senderID)
+                .then(senderHash => {
+                    redis.getHash(reciecerID)
+                        .then(reciecerHash => {
+                            const senderLstMsg = senderHash.lastMessage;
+                            const reciverLstMsg = senderHash.lastMessage;
+
+                            if (senderLstMsg >= reciecerHash)
+                                resolve((senderLstMsg - reciverLstMsg) >= 5);
+                            else
+                                resolve((reciverLstMsg - senderLstMsg) >= 5);
+                        })
+                });
+        })
+    },
+
+    getConnectedList (){
+        return redis.getKey('connectedList');
     }
 
 };

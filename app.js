@@ -12,6 +12,7 @@ const setUp = require('./config/initializers/setup');
 const message = require('./app/messenger/message');
 const postbacks = require('./app/messenger/postback');
 const mongodb = require('./services/mongodb');
+const services = require('./services/backgroud');
 
 nconf.use('memory');
 // Load Environment variables from .env file
@@ -43,6 +44,9 @@ message(bot);
 
 //Postbacks
 postbacks(bot);
+
+//Starts all the backgroud services
+services(bot);
 
 //Starting the server
 server(bot);

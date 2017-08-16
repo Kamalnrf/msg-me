@@ -50,25 +50,21 @@ describe("msg-me test", function() {
         done();
     });
 
-    it ('connection validity', done => {
-        msg_me.conectedTo(userID)
-            .then(texting => {
-                expect(texting).toBe(userID2);
-
-                done();
-            })
-    });
-
-    it ('is connected to ', done => {
-
-    });
-
     it ('disconnect', done => {
         msg_me.disconnect(userID, userID2);
 
         msg_me.isConnected(userID)
             .then(isConnected => {
                 expect(isConnected).toBe('false');
+                done();
+            })
+    });
+
+    it ('checks is idle function', done => {
+
+        msg_me.isIdle(userID, userID2)
+            .then(isIdle => {
+                expect(isIdle).toBe(true);
                 done();
             })
     });
