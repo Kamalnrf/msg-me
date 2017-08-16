@@ -133,6 +133,14 @@ const msgMe = {
         }
     },
 
+    addToConnected (senderID){
+
+    },
+
+    removeToConnected (senderID) {
+
+    },
+
     /**
      * Returns true if fbID is texting
      * @param fbID

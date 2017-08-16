@@ -103,7 +103,7 @@ function unQueue (senderID, recieverID){
         .then(queuedUsers => {
             console.log(queuedUsers);
             queuedUsers.map(element => {
-                msg_me.getMyName(element)
+                msg_me.getMyName(senderID)
                     .then(name => {
                         bot.sendTextMessage(element, `${name} is now ready to connect.`);
                     });
@@ -114,7 +114,7 @@ function unQueue (senderID, recieverID){
         .then(queuedUsers => {
             console.log(queuedUsers);
             queuedUsers.map(element => {
-                msg_me.getMyName(element)
+                msg_me.getMyName(recieverID)
                     .then(name => {
                         bot.sendTextMessage(element, `${name} is now ready to connect.`);
                     });

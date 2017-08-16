@@ -17,10 +17,60 @@ describe("msg-me test", function() {
         }
     };
 
+    const userID = 123;
+    const userName = 'kamalnrfTester';
+    const userID2 = 145;
+    const userName2 = 'mukkamala';
+
     redis.init(redisConfig);
 
+    it ('Creating user test', done => {
+        msg_me.createUser(userID, userName);
+        msg_me.createUser(userID2, userName2);
+
+        msg_me.findUser(userName)
+            .then(userID => {
+                this.userID = userID;
+                done();
+            })
+    });
+
+    it ('Testing is existing', done => {
+        msg_me.isExiting(userID)
+            .then(existence => {
+                expect(existence).toBe(true);
+
+                done();
+            });
+    });
+
+    it ('Connection', done => {
+        msg_me.connect(userID, userID2);
+
+        done();
+    });
+
+    it ('connection validity', done => {
+        msg_me.conectedTo(userID)
+            .then(texting => {
+                expect(texting).toBe(userID2);
+
+                done();
+            })
+    });
+
+    it ('disconnect', done => {
+        msg_me.disconnect(userID, userID2);
+
+        msg_me.isConnected(userID)
+            .then(isConnected => {
+                expect(isConnected).toBe('false');
+                done();
+            })
+    });
+
     it ("online/offline test", done => {
-        msg_me.isOnline(1663257250351557)
+        msg_me.isOnline(userID)
             .then(state => {
                 expect(state).toBe('true');
                 done();
@@ -28,9 +78,9 @@ describe("msg-me test", function() {
     });
 
     it ("turn offline test", done => {
-        msg_me.turnOffline(1663257250351557)
+        msg_me.turnOffline(userID)
             .then(result => {
-                msg_me.isOnline(1663257250351557)
+                msg_me.isOnline(userID)
                     .then(state => {
                         expect(state).toBe('false');
                         done();
@@ -40,61 +90,13 @@ describe("msg-me test", function() {
     });
 
     it ("turns online test", done => {
-        msg_me.turnOnline(1663257250351557)
+        msg_me.turnOnline(userID)
             .then(result => {
-                msg_me.isOnline(1663257250351557)
+                msg_me.isOnline(userID)
                     .then(state => {
                         expect(state).toBe('true');
                         done();
                     });
             })
     })
-   /* // it("Creating user test", done => {
-    //     msg_me.createUser("1301322373237717", "kamalnrf");
-    //
-    //     redis.getKey("1301322373237717")
-    //         .then(userName => {
-    //
-    //             expect(userName).toBe("kamalnrf");
-    //
-    //             done();
-    //         })
-    //         .catch(error => {
-    //             fail(error);
-    //         });
-    // });
-    //
-    // it("Find user", done => {
-    //     msg_me.createUser("17639", "findMe");
-    //
-    //     redis.getKey("findMe")
-    //         .then(fbID => {
-    //
-    //             expect(msg_me.findUser("findMe")).toBe(fbID);
-    //
-    //             done();
-    //         })
-    //         .catch(error => {
-    //             fail(error);
-    //         })
-    // });
-    //
-    // it ("Connect", done => {
-    //     msg_me.connect("17639", "1301322373237717");
-    //
-    //     redis.getKey("17639isTexting")
-    //         .then(isTexting => {
-    //             expect(isTexting).toBe(true);
-    //         })
-    // });
-    //
-    // it ("Disconnect", done => {
-    //     msg_me.connect("17639", "1301322373237717");
-    //     msg_me.disconnect("17639");
-    //
-    //     redis.getKey("17639isTexting")
-    //         .then(isTexting => {
-    //             expect(isTexting).toBe(false);
-    //         })
-    // });*/
 });

@@ -43,12 +43,14 @@ const Connection = {
                                                                     //Checks if the user is not connected to anyone.
                                                                     if (conected === false || conected === "false")
                                                                         if (msg_me.connect(senderID, recieverID) === true) {
+
                                                                             chat.say(`We have established connection between you and ${userName}.`)
                                                                                 .then(() => chat.say(`If at any point you feel like ending the conversation send '#stop'`)
                                                                                     .then(() => chat.say("Say hello to start the conversation.")));
                                                                             bot.say(recieverID, `A connection has been established between you and someone who wants to talk to you anonymously.\nIf at any point you feel like ending the conversation send '#stop'`)
                                                                                 .then(() => bot.say(recieverID, "Say hello to start the conversation."));
                                                                             convo.end();
+
                                                                         } else
                                                                             convo.say("Something went wrong try again");
                                                                     else

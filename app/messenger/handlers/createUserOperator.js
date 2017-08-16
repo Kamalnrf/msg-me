@@ -27,7 +27,8 @@ const newUser = {
                             else
                                 convo.say(`There was some problem while creating your username`);
                         else
-                            convo.say("Your ")
+                            convo.say("The name you choose doesn't comply with our naming convention.")
+                                .then(() => this.createUser(convo, payload));
                     }else
                         convo.say(`We are sorry. It looks like this username is taken. Please try another one.`)
                             .then(() => this.createUser(convo, payload));
