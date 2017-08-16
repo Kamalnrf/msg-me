@@ -105,3 +105,7 @@ exports.findFirstKey = function (pattern) {
 exports.getClient = function () {
     return client;
 };
+
+exports.addToSet = function (setName, value) {
+    return client.sadd(listName, value);
+};

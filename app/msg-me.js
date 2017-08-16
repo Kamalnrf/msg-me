@@ -25,11 +25,14 @@ const msgMe = {
                 isOnline: true,
                 userQueue: ['def'],
                 usersBlocked: ['def'],
-                onHold: -1
+                onHold: -1,
+                points: 0,
+                friends: ['def']
             };
 
             redis.setHash(fbID, fbIDUser);
 
+            redis.addToSet('users', fbID);
 
             const user = new userModel({
                 userName: userName,
@@ -353,15 +356,21 @@ const msgMe = {
         return new Promise ((resolve, reject) => {
             redis.getHash(senderID)
                 .then(senderHash => {
+                    console.log(`Sender hash: ${senderHash}`);
                     redis.getHash(reciecerID)
                         .then(reciecerHash => {
+                            console.log(`Reciever hash: ${reciecerHash}`);
                             const senderLstMsg = senderHash.lastMessage;
                             const reciverLstMsg = senderHash.lastMessage;
 
-                            if (senderLstMsg >= reciecerHash)
-                                resolve((senderLstMsg - reciverLstMsg) >= 5);
-                            else
-                                resolve((reciverLstMsg - senderLstMsg) >= 5);
+                            if (senderLstMsg >= reciecerHash) {
+                                console.log(senderLstMsg - reciverLstMsg);
+                                resolve((senderLstMsg - reciverLstMsg) >= 5 || (senderLstMsg - reciverLstMsg) < 0);
+                            }
+                            else {
+                                console.log(senderLstMsg - reciverLstMsg);
+                                resolve((reciverLstMsg - senderLstMsg) >= 5 || (reciverLstMsg - senderLstMsg) < 0 );
+                            }
                         })
                 });
         })
