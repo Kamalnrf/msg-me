@@ -13,6 +13,7 @@ const backGroundService = (bot) => {
 };
 
 function deleteIdleConv (){
+    console.log(`Current time: ${(new Date()).getMinutes()}`);
     msg_me.getConnectedList()
         .then(list => {
             list.split(',')
@@ -23,6 +24,7 @@ function deleteIdleConv (){
                                 msg_me.isIdle(senderID, recieverID)
                                     .then(isIdle => {
                                         if (isIdle) {
+                                            console.log(`isIdle: ${isIdle}`);
                                             bot.sendTextMessage(senderID, "It seems you are idle for a long time so we are closing the connection");
                                             bot.sendTextMessage(recieverID, "It seems you are idle for a long time so we are closing the connection");
                                             msg_me.disconnect(senderID, recieverID);
