@@ -38,8 +38,10 @@ const postback = (bot) => {
                                     .then(name => {
                                         bot.sendTextMessage(element, `${name} is online. Now you can connect with him.`);
                                     });
-                            }).then(() => msg_me.removeQueuedUsers(fbID));
+                            });
                         });
+
+                    msg_me.removeQueuedUsers(fbID);
                 }
                 else
                     chat.say("You need to create a user name first.")

@@ -59,6 +59,10 @@ describe("msg-me test", function() {
             })
     });
 
+    it ('is connected to ', done => {
+
+    });
+
     it ('disconnect', done => {
         msg_me.disconnect(userID, userID2);
 

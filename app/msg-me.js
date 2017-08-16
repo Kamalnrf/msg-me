@@ -134,11 +134,19 @@ const msgMe = {
     },
 
     addToConnected (senderID){
+        redis.getKey('connectedList')
+            .then(conList => {
+                conList += senderID;
 
+                redis.setKey('connectedList', conList);
+            })
     },
 
     removeToConnected (senderID) {
+        redis.getKey('connectedList')
+            .then(conList => {
 
+            })
     },
 
     /**
@@ -235,9 +243,9 @@ const msgMe = {
      * @param reqUser
      */
     addQueue (fbID, reqUser) {
-        redis.getHash(fbID)
+        redis.getHash(reqUser)
             .then(list => {
-                list.userQueue += `,${reqUser}`;
+                list.userQueue += `,${fbID}`;
                 redis.setHash(fbID , list);
             });
     },
