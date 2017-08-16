@@ -81,6 +81,30 @@ const postback = (bot) => {
             }).catch(error => console.log(error));
     });
 
+    //-------------Stop a conversation-----------------//
+    bot.on('postback:stop', (paylod, chat) => {
+        console.log(paylod);
+
+        const fbID = payload.sender.id;
+
+        msg_me.isConnected(fbID)
+            .then(connected => {
+                if (connected === 'true' || connected === true)
+                    msg_me.conectedTo(fbID)
+                        .then(recieverID => {
+                            msg_me.disconnect(fbID, recieverID);
+
+                            msg_me.getMyName(recieverID)
+                                .then(recieverName => {
+                                    chat.say(`Conversation between you and ${recieverName} has ended`);
+                                    bot.say(recieverID, `${recieverName} your conversation has ended`);
+                                })
+                        });
+                else
+                    chat.say(`You have to be in a conversation to stop a conversation`);
+            })
+    });
+
     //----------My User Name-----------//
     bot.on('postback:myName', (payload, chat) => {
         console.log(payload);
