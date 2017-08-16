@@ -141,7 +141,7 @@ const msgMe = {
     addToConnected (senderID){
         redis.getKey('connectedList')
             .then(conList => {
-                conList += senderID;
+                conList += ',' + senderID;
 
                 redis.setKey('connectedList', conList);
             })
