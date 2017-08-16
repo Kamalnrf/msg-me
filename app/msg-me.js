@@ -361,7 +361,7 @@ const msgMe = {
                         .then(reciecerHash => {
                             console.log(`Reciever hash: ${reciecerHash}`);
                             const senderLstMsg = senderHash.lastMessage;
-                            const reciverLstMsg = senderHash.lastMessage;
+                            const reciverLstMsg = reciecerHash.lastMessage;
 
                             console.log(senderLstMsg);
                             console.log(reciverLstMsg);
