@@ -36,6 +36,7 @@ const postback = (bot) => {
                             queuedUsers.map(element => {
                                 msg_me.getMyName(fbID)
                                     .then(name => {
+                                        console.log(element);
                                         bot.sendTextMessage(element, `${name} is online. Now you can connect with him.`);
                                     });
                             });
