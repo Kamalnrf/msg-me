@@ -5,6 +5,7 @@
 'use strict';
 const msg_me = require('../../msg-me');
 const connection = require('./connection');
+const shrImage = require('./shrImage');
 
 const newUser = {
     createUser (convo, payload){
@@ -21,9 +22,17 @@ const newUser = {
                     console.log(`Requested username Existence: ${existense}`);
                     if (existense === false){
                         if (checkRules(reqUserName))
-                            if (msg_me.createUser(fbID, reqUserName) === true)
+                            if (msg_me.createUser(fbID, reqUserName) === true) {
+                                convo.getUserProfile()
+                                    .then((user) => {
+                                        shrImage.genImage(user.profile_pic, reqUserName)
+                                            .then(image => {
+                                                console.log(image);
+                                            });
+                                    });
                                 convo.say(`Thanks for creating the username. Your username is ${reqUserName}. Share it among your friends!`)
                                     .then(() => convo.sendTypingIndicator(5000).then(() => connection.estConnection(convo, payload, bot)));
+                            }
                             else
                                 convo.say(`There was some problem while creating your username`);
                         else
