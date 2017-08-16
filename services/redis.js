@@ -107,5 +107,5 @@ exports.getClient = function () {
 };
 
 exports.addToSet = function (setName, value) {
-    return client.sadd(listName, value);
+    return client.sadd(setName, value);
 };

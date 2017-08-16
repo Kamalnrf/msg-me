@@ -23,11 +23,11 @@ const msgMe = {
                 texting: -1,
                 lastMessage: -1,
                 isOnline: true,
-                userQueue: ['def'],
-                usersBlocked: ['def'],
+                userQueue: 'def',
+                usersBlocked: 'def',
                 onHold: -1,
                 points: 0,
-                friends: ['def']
+                friends: 'def'
             };
 
             redis.setHash(fbID, fbIDUser);
@@ -126,6 +126,8 @@ const msgMe = {
                         reciverHash.isTexting = false;
                         senderHash.texting = -1;
                         reciverHash.texting = -1;
+                        senderHash.lastMessage = -1;
+                        reciverHash.lastMessage = -1;
 
                         redis.setHash(senderID, senderHash);
                         redis.setHash(recieverID, reciverHash);

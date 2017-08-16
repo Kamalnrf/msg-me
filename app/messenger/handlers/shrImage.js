@@ -5,6 +5,7 @@
 'use strict';
 
 const Jimp = require('jimp');
+const imgur = require('imgur-uploader');
 
 const chanon = 'D:\\Kamal\\Work\\bothook\\msg-me\\app\\helpers\\chanon.jpg';
 const plusX = 390, plusY = 226;
@@ -26,7 +27,7 @@ const shrImage = {
             });
 
             let buf;
-            await dp.getBuffer(Jimp.MIME_JPEG, (err, buffer) => {
+            await userNamePrinted.getBuffer(Jimp.MIME_JPEG, (err, buffer) => {
                 buf = buffer;
             });
 
@@ -34,7 +35,18 @@ const shrImage = {
         }catch (error) {
             console.log(error);
         }
+    },
+
+    async getLink (imageBuffer, userName){
+        try {
+            const data = await imgur(imageBuffer, {title: userName});
+
+            return data.link;
+        }catch (error) {
+            console.log(error);
+        }
     }
+
 
 };
 
