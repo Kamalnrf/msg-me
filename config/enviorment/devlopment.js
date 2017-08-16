@@ -20,7 +20,7 @@ const redisConfig = {
         port: 6379,
         host: 'localhost',
         pass: '',
-        db: 1
+        db: 5
     }
 };
 

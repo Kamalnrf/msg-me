@@ -180,10 +180,12 @@ const msgMe = {
      * @param fbId
      * @returns {boolean}
      */
-    turnOffline(fbId){
-        redis.getHash(fbId)
+    async turnOffline(fbId){
+        await redis.getHash(fbId)
             .then(hash => {
                 hash.isOnline = false;
+
+                redis.setHash(fbId, hash);
             });
 
         return true;
@@ -194,10 +196,12 @@ const msgMe = {
      * @param fbID
      * @returns {boolean}
      */
-    turnOnline(fbID){
-        redis.getHash(fbID)
+    async turnOnline(fbID){
+        await redis.getHash(fbID)
             .then(hash => {
-                hash.isOnline = false;
+                hash.isOnline = true;
+
+                redis.setHash(fbID, hash);
             });
 
         return true;

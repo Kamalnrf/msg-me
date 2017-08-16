@@ -10,6 +10,9 @@ const newUser = require('./handlers/createUserOperator');
 const feedback = require('./handlers/feedback');
 
 const postback = (bot) => {
+    bot.on('postback', (payload, chat) => {
+       console.log(payload);
+    });
     //----------Online/Offline--------//
     bot.on('postback:online/offline', (payload, chat) => {
         console.log(payload);
@@ -19,16 +22,19 @@ const postback = (bot) => {
         msg_me.isOnline(fbID)
             .then(isOnline => {
                 console.log(`isOnline ${isOnline}\nType: ${typeof isOnline}`);
-                if (isOnline === 'true' || isOnline === true)
-                    (msg_me.turnOffline(fbID)) ? chat.say("You’re now Offline. Friends will not be able to connect with you. Please turn back to Online if you want to chat anonymously with your friends.") : chat.say("Something went wrong tryagain");
+                if (isOnline === 'true' || isOnline === true) {
+                    msg_me.turnOffline(fbID)
+                        .then(result => result ? chat.say("You’re now Offline. Friends will not be able to connect with you. Please turn back to Online if you want to chat anonymously with your friends.") : chat.say("Something went wrong tryagain"));
+                }
                 else if (isOnline === false || isOnline === "false") {
-                    (msg_me.turnOnline(fbID)) ? chat.say("You’re now Online. Hold on! Any friend of yours maybe contacting you soon.") : chat.say("Something went wrong tryagain");
+                    msg_me.turnOnline(fbID)
+                        .then(result => result ? chat.say("You’re now Online. Hold on! Any friend of yours maybe contacting you soon.") : chat.say("Something went wrong tryagain"));
 
                     msg_me.getAllQueuedUsers(fbID)
                         .then(queuedUsers => {
                             console.log(queuedUsers);
                             queuedUsers.map(element => {
-                                msg_me.getMyName(element)
+                                msg_me.getMyName(fbID)
                                     .then(name => {
                                         bot.sendTextMessage(element, `${name} is online. Now you can connect with him.`);
                                     });
