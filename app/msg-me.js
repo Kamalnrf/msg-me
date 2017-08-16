@@ -369,6 +369,17 @@ const msgMe = {
 
     getConnectedList (){
         return redis.getKey('connectedList');
+    },
+
+    async updateLastMSg (fbID) {
+        const hash = await redis.getHash(fbID);
+
+        const time = new Date();
+        hash.lastMessage = time.getMinutes();
+
+        await redis.setHash(fbID, hash);
+
+        return true;
     }
 
 };

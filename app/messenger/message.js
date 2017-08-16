@@ -54,8 +54,10 @@ const message = (bot) => {
                                 msg_me.conectedTo(payload.sender.id)
                                     .then(reciverID => {
                                         console.log('Sending message');
-                                        if (message !== '#stop')
+                                        if (message !== '#stop') {
                                             bot.say(reciverID, message);
+                                            msg_me.updateLastMSg(payload.sender.id);
+                                        }
                                         else if (message === '#stop'){
                                             if (msg_me.disconnect(payload.sender.id, reciverID)){
                                                 bot.say(reciverID, "Your connection has been closed");
