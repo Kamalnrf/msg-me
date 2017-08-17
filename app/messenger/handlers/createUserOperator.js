@@ -15,7 +15,7 @@ const newUser = {
 
         const answer = (payload, chat) => {
             const fbID = payload.sender.id;
-            const reqUserName = payload.message.text;
+            const reqUserName = payload.message.text.toLowerCase();
 
             msg_me.isExitingUser(reqUserName)
                 .then(existense => {
