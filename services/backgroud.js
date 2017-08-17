@@ -7,7 +7,7 @@
 const msg_me = require('../app/msg-me');
 
 const backGroundService = (bot) => {
-    setInterval(deleteIdleConv, 10000);
+    setInterval(deleteIdleConv, 300000);
 
     console.log("Started all the services.")
 };

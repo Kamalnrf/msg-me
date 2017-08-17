@@ -29,6 +29,7 @@ const newUser = {
                                             .then(image => {
                                                 shrImage.getLink(image, reqUserName)
                                                     .then(link => {
+                                                        console.log(link);
                                                         convo.sendGenericTemplate([
                                                             {
                                                                 title:"Share this with friends",
