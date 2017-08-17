@@ -29,13 +29,13 @@ const setup = (bot) => {
         {
             title: 'Start a conversation',
             type: 'postback',
-            payload: 'start'
+            payload: '_start'
         },
 
         {
           title: 'Stop the conversation',
           type: 'postback',
-          payload: 'stop'
+          payload: '_stop'
         },
 
         {

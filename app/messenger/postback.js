@@ -13,7 +13,7 @@ const postback = (bot) => {
     bot.on('postback', (payload, chat) => {
        console.log(payload);
 
-       if (payload.postback.payload === 'stop') {
+       if (payload.postback.payload === '_stop') {
            const fbID = payload.sender.id;
 
            msg_me.isConnected(fbID)
@@ -76,7 +76,7 @@ const postback = (bot) => {
     });
 
     //----------Start a conversation----//
-    bot.on('postback:start', (payload, chat) => {
+    bot.on('postback:_start', (payload, chat) => {
         console.log(payload);
 
         const fbID = payload.sender.id;
