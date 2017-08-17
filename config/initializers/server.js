@@ -9,6 +9,7 @@ const start = (bot) => {
         res.send("{status:true}");
     });
 
+
     //Starts the bot
     bot.start(process.env.PORT || 8000)
 };

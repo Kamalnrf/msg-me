@@ -5,13 +5,20 @@
 'use strict';
 
 const msg_me = require('../app/msg-me');
+const axios  = require('axios');
 
 const backGroundService = (bot) => {
-    setInterval(deleteIdleConv, 300000);
+    setInterval(deleteIdleConv, 900000);
+
+    setInterval(callMyself, 900000);
 
     console.log("Started all the services.")
 };
 
+function callMyself() {
+    axios.get('https://radiant-beyond-89697.herokuapp.com/')
+        .then(data => console.log(data))
+}
 function deleteIdleConv (){
     console.log(`Current time: ${(new Date()).getMinutes()}`);
     msg_me.getConnectedList()

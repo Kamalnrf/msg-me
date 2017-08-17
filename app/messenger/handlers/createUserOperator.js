@@ -32,7 +32,7 @@ const newUser = {
                                                         console.log(link);
                                                         convo.sendGenericTemplate([
                                                             {
-                                                                title:"Share this with friends",
+                                                                title:`My username: ${reqUserName}`,
                                                                 image_url:link,
                                                                 default_action: {
                                                                     type: "web_url",

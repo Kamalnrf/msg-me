@@ -370,11 +370,11 @@ const msgMe = {
 
                             if (senderLstMsg >= reciecerHash) {
                                 console.log(senderLstMsg - reciverLstMsg);
-                                resolve((senderLstMsg - reciverLstMsg) >= 5 || (senderLstMsg - reciverLstMsg) < 0);
+                                resolve((senderLstMsg - reciverLstMsg) >= 15 || (senderLstMsg - reciverLstMsg) < 0);
                             }
                             else {
                                 console.log(senderLstMsg - reciverLstMsg);
-                                resolve((reciverLstMsg - senderLstMsg) >= 5 || (reciverLstMsg - senderLstMsg) < 0 );
+                                resolve((reciverLstMsg - senderLstMsg) >= 15 || (reciverLstMsg - senderLstMsg) < 0 );
                             }
                         })
                 });
