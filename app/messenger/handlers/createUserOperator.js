@@ -43,7 +43,7 @@ const newUser = {
                                                                     {type:"web_url", url: 'http://m.me/1536772976386751', title: 'Open Bot'}
                                                                 ]
                                                             },
-                                                        ]).then(() => convo.say(`Thanks for creating the username. Your username is ${reqUserName}. Share it among your friends!`)
+                                                        ]).then(() =>convo.say(`Thanks for creating the username. Your username is ${reqUserName}. Share it among your friends!`)
                                                             .then(() => convo.sendTypingIndicator(5000).then(() => connection.estConnection(convo, payload, bot))));
                                                     })
                                             });
