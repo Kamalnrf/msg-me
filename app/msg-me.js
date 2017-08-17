@@ -394,6 +394,21 @@ const msgMe = {
         await redis.setHash(fbID, hash);
 
         return true;
+    },
+
+    saveImage (fbID, link) {
+        redis.getHash(fbID)
+            .then(hash => {
+                hash.profileUrl = link;
+
+                redis.setHash(fbID, hash);
+            })
+    },
+
+    async getMyImage (fbID){
+        const hash = await redis.getHash(fbID);
+
+        return hash.profileUrl;
     }
 
 };

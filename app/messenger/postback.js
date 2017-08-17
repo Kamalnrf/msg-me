@@ -8,6 +8,7 @@ const msg_me = require('../msg-me');
 const connection = require('./handlers/connection');
 const newUser = require('./handlers/createUserOperator');
 const feedback = require('./handlers/feedback');
+const shrImage = require('./handlers/shrImage');
 
 const postback = (bot) => {
     bot.on('postback', (payload, chat) => {
@@ -23,11 +24,8 @@ const postback = (bot) => {
                            .then(recieverID => {
                                msg_me.disconnect(fbID, recieverID);
 
-                               msg_me.getMyName(recieverID)
-                                   .then(recieverName => {
-                                       chat.say(`Conversation between you and ${recieverName} has ended`);
-                                       bot.say(recieverID, `${recieverName} your conversation has ended`);
-                                   })
+                               chat.say(`Conversation has ended`);
+                               bot.say(recieverID, `Conection has been ended.`);
                            });
                    else
                        chat.say(`You have to be in a conversation to stop a conversation`);
@@ -110,8 +108,36 @@ const postback = (bot) => {
 
         msg_me.getMyName(fbID)
             .then(userName => {
-                if (userName !== null)
-                    chat.say(`Your username is ${userName}. Share it with your friends.`);
+                if (userName !== null) {
+                    msg_me.getMyImage(fbID)
+                        .then(link => {
+                            if (link === null || link === undefined) {
+                                console.log(`link is null`);
+                                chat.getUserProfile()
+                                    .then((user) => {
+                                        shrImage.genImage(user.profile_pic, userName)
+                                            .then(image => {
+                                                shrImage.getLink(image, userName)
+                                                    .then(link => {
+                                                        console.log(link);
+                                                        msg_me.saveImage(fbID, link);
+                                                        chat.say({
+                                                            attachment: 'image',
+                                                            url: link
+                                                        });
+                                                        chat.say(`Your username is ${userName}. Share it with your friends.`);
+                                                    })
+                                            });
+                                    });
+                            }
+                            else {
+                                chat.say({
+                                    attachment: 'image',
+                                    url: link
+                                }).then(() => chat.say(`Your username is ${userName}. Share it with your friends.`));
+                            }
+                        });
+                }
                 else
                     chat.say("You need to create a username first.")
                         .then(() => {

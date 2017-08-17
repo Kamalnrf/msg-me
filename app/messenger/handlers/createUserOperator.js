@@ -30,21 +30,11 @@ const newUser = {
                                                 shrImage.getLink(image, reqUserName)
                                                     .then(link => {
                                                         console.log(link);
-                                                        convo.sendGenericTemplate([
-                                                            {
-                                                                title:`My username: ${reqUserName}`,
-                                                                image_url:link,
-                                                                default_action: {
-                                                                    type: "web_url",
-                                                                    url: link,
-                                                                    webview_height_ratio: "tall",
-                                                                },
-                                                                buttons:[
-                                                                    {type:"element_share"},
-                                                                    {type:"web_url", url: 'http://m.me/1536772976386751', title: 'Open Bot'}
-                                                                ]
-                                                            },
-                                                        ]).then(() =>convo.say(`Thanks for creating the username. Your username is ${reqUserName}. Share it among your friends!`)
+                                                        msg_me.saveImage(fbID, link);
+                                                        convo.say({
+                                                            attachment: 'image',
+                                                            url: link
+                                                        }).then(() =>convo.say(`Thanks for creating the username. Your username is ${reqUserName}. Share it among your friends!`)
                                                             .then(() => convo.sendTypingIndicator(5000).then(() => connection.estConnection(convo, payload, bot))));
                                                     })
                                             });
