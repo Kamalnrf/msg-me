@@ -7,7 +7,7 @@
 const Jimp = require('jimp');
 const imgur = require('imgur-uploader');
 
-const chanon = 'D:\\Kamal\\Work\\bothook\\msg-me\\app\\helpers\\chanon.jpg';
+const chanon = 'chanon.jpg';
 const plusX = 390, plusY = 226;
 
 const shrImage = {
