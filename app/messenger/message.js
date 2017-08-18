@@ -107,8 +107,8 @@ const message = (bot) => {
 
 };
 
-function unQueue (senderID, recieverID){
-    msg_me.getAllQueuedUsers(senderID)
+async function unQueue (senderID, recieverID){
+    await msg_me.getAllQueuedUsers(senderID)
         .then(queuedUsers => {
             console.log(queuedUsers);
             queuedUsers.map(element => {
@@ -116,10 +116,12 @@ function unQueue (senderID, recieverID){
                     .then(name => {
                         bot.sendTextMessage(element, `${name} is now ready to connect.`);
                     });
-            }).then(() => msg_me.removeQueuedUsers(senderID));
+            })
         });
 
-    msg_me.getAllQueuedUsers(recieverID)
+    msg_me.removeQueuedUsers(senderID);
+
+    await msg_me.getAllQueuedUsers(recieverID)
         .then(queuedUsers => {
             console.log(queuedUsers);
             queuedUsers.map(element => {
@@ -127,8 +129,10 @@ function unQueue (senderID, recieverID){
                     .then(name => {
                         bot.sendTextMessage(element, `${name} is now ready to connect.`);
                     });
-            }).then(() => msg_me.removeQueuedUsers(recieverID));
+            });
         });
+
+    msg_me.removeQueuedUsers(recieverID)
 }
 
 
