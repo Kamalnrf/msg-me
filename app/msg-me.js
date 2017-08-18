@@ -92,6 +92,8 @@ const msgMe = {
             redis.getHash(senderID)
                 .then(senderHash => redis.getHash(recieverID)
                     .then(reciverHash => {
+                        senderHash.onHold = -1;
+                        reciverHash.onHold = -1;
                         senderHash.isTexting = true;
                         reciverHash.isTexting = true;
                         senderHash.texting = recieverID;
@@ -101,6 +103,8 @@ const msgMe = {
                         redis.setHash(recieverID, reciverHash);
 
                         this.addToConnected(senderID);
+                        this.removeOhHold(senderID);
+                        this.removeOhHold(recieverID);
                         console.log("Completed changing th db value");
                     }));
 
@@ -128,6 +132,8 @@ const msgMe = {
                         reciverHash.texting = -1;
                         senderHash.lastMessage = -1;
                         reciverHash.lastMessage = -1;
+                        senderHash.onHold = -1;
+                        reciverHash.onHold = -1;
 
                         redis.setHash(senderID, senderHash);
                         redis.setHash(recieverID, reciverHash);
@@ -368,14 +374,15 @@ const msgMe = {
                             console.log(senderLstMsg);
                             console.log(reciverLstMsg);
 
-                            if (senderLstMsg >= reciecerHash) {
-                                console.log(senderLstMsg - reciverLstMsg);
-                                resolve((senderLstMsg - reciverLstMsg) >= 15 || (senderLstMsg - reciverLstMsg) < 0);
-                            }
-                            else {
-                                console.log(senderLstMsg - reciverLstMsg);
-                                resolve((reciverLstMsg - senderLstMsg) >= 15 || (reciverLstMsg - senderLstMsg) < 0 );
-                            }
+                            resolve(((new Date()).getMinutes() - reciverLstMsg) >= 15  || ((new Date()).getMinutes() - senderLstMsg) >= 15);
+                            // if (senderLstMsg >= reciecerHash) {
+                            //     console.log(senderLstMsg - reciverLstMsg);
+                            //     resolve((senderLstMsg - reciverLstMsg) >= 60000  || (senderLstMsg - reciverLstMsg) < 0);
+                            // }
+                            // else {
+                            //     console.log(senderLstMsg - reciverLstMsg);
+                            //     resolve((reciverLstMsg - senderLstMsg) >= 60000  || (reciverLstMsg - senderLstMsg) < 0 );
+                            //}
                         })
                 });
         })
@@ -409,7 +416,51 @@ const msgMe = {
         const hash = await redis.getHash(fbID);
 
         return hash.profileUrl;
-    }
+    },
+
+    async estRequest (senderID, recieverID) {
+        const senderHash = await redis.getHash(senderID);
+        const recieverHash = await redis.getHash(recieverID);
+
+        senderHash.onHold = new Date().getMinutes() + '-' + recieverID;
+        recieverHash.onHold = senderID;
+
+        await redis.setHash(senderID, senderHash);
+        await redis.setHash(recieverID, recieverHash);
+        await this.addOnHold(senderID);
+
+        return true;
+    },
+
+    async whatIsOnHold (fbID){
+        const hash = await redis.getHash(fbID);
+
+        return hash.onHold;
+    },
+
+    async addOnHold (fbID){
+        let list = await redis.getKey('onHoldList');
+        list += ',' + fbID;
+
+        await redis.setKey('onHoldList', list);
+
+        return true;
+    },
+
+    async removeOhHold (requesterID) {
+        const conList = await redis.getKey('onHoldList');
+
+        const list = await conList.split(',')
+            .filter(element => element !== requesterID);
+
+        await redis.setKey('onHoldList', list);
+    },
+
+
+    getOnHoldList (){
+        return redis.getKey('onHoldList');
+    },
+
 
 };
 

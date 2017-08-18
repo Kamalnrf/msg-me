@@ -36,39 +36,46 @@ const message = (bot) => {
             .then(existence => {
                 console.log(existence);
                 if (existence === true ) {
-                    msg_me.isConnected(payload.sender.id)
-                        .then(connected => {
-                            console.log(`Connection ${connected}`);
-                            if (connected !== "true") {
+                    msg_me.whatIsOnHold(payload.sender.id)
+                        .then(onHold => {
+                            if (onHold === '-1' || onHold === -1){
+                                msg_me.isConnected(payload.sender.id)
+                                    .then(connected => {
+                                        console.log(`Connection ${connected}`);
+                                        if (connected !== "true") {
 
-                                chat.say("You need to establish a connection.")
-                                    .then(() => {
-                                        chat.conversation((convo) => {
-                                            convo.sendTypingIndicator(1000)
-                                                .then(() => connection.estConnection(convo, payload, bot))
-                                                .catch(error => console.log(error));
-                                        })
-                                    })
-                            }
-                            else {
-                                msg_me.conectedTo(payload.sender.id)
-                                    .then(reciverID => {
-                                        console.log('Sending message');
-                                        if (message !== '#stop') {
-                                            bot.say(reciverID, message);
-                                            msg_me.updateLastMSg(payload.sender.id);
+                                            chat.say("You need to establish a connection.")
+                                                .then(() => {
+                                                    chat.conversation((convo) => {
+                                                        convo.sendTypingIndicator(1000)
+                                                            .then(() => connection.estConnection(convo, payload, bot))
+                                                            .catch(error => console.log(error));
+                                                    })
+                                                })
                                         }
-                                        else if (message === '#stop'){
-                                            if (msg_me.disconnect(payload.sender.id, reciverID)){
-                                                bot.say(reciverID, "Your connection has been closed");
-                                                chat.say("Your connection has been closed");
+                                        else {
+                                            msg_me.conectedTo(payload.sender.id)
+                                                .then(reciverID => {
+                                                    console.log('Sending message');
+                                                    if (message !== '#stop') {
+                                                        bot.say(reciverID, message);
+                                                        msg_me.updateLastMSg(payload.sender.id);
+                                                    }
+                                                    else if (message === '#stop'){
+                                                        if (msg_me.disconnect(payload.sender.id, reciverID)){
+                                                            bot.say(reciverID, "Your connection has been closed");
+                                                            chat.say("Your connection has been closed");
 
-                                                unQueue(payload.sender.id, reciverID);
-                                            }
+                                                            unQueue(payload.sender.id, reciverID);
+                                                        }
+                                                    }
+                                                }).catch(error => console.log(error));
                                         }
                                     }).catch(error => console.log(error));
+                            }else{
+                                chat.say('You still have a active request you need to accept it before moving ahead');
                             }
-                        }).catch(error => console.log(error));
+                        });
                 }
                 else
                     chat.say("It seems you haven't created a username for you yet.")

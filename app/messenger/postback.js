@@ -32,6 +32,40 @@ const postback = (bot) => {
                })
        }
     });
+
+    bot.on('postback:REQ_YES', (payload, chat) => {
+        console.log(payload);
+        const senderID = payload.sender.id;
+
+        msg_me.whatIsOnHold(senderID)
+            .then(recieverID => {
+                if (recieverID !== '-1') {
+                    if (msg_me.connect(senderID, recieverID) === true) {
+                        chat.say(`A connection has been established`);
+                        bot.say(recieverID, `A connection has been established`);
+                    }
+                }else {
+                    chat.say(`Your request has been, expired.`);
+                }
+            });
+    });
+
+    bot.on('postback:REQ_NO', (payload, chat) => {
+        console.log(payload);
+        const senderID = payload.sender.id;
+
+        msg_me.whatIsOnHold(senderID)
+            .then(recieverID => {
+                if (recieverID !== -1) {
+                    if (msg_me.disconnect(senderID, recieverID) === true) {
+                        chat.say(`Ok`);
+                        bot.say(recieverID, `Your request has been rejected, try connecting with someone else.`);
+                    }
+                }else {
+                    chat.say(`OK.`);
+                }
+            });
+    });
     //----------Online/Offline--------//
     bot.on('postback:online/offline', (payload, chat) => {
         console.log(payload);
