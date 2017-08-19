@@ -94,9 +94,23 @@ describe("msg-me test", function() {
             .then(result => {
                 msg_me.isOnline(userID)
                     .then(state => {
+                        msg_me.addQueue(123, '1');
                         expect(state).toBe('true');
                         done();
                     });
             })
-    })
+    });
+
+    add100Queue();
+
+    it ('queue test', done => {
+
+    });
 });
+
+function add100Queue (){
+
+    for (let counter = 0; counter < 100; counter++)
+        msg_me.addQueue(123, counter);
+
+}

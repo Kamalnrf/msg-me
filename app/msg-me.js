@@ -232,12 +232,11 @@ const msgMe = {
      * @returns {boolean}
      */
     async turnOnline(fbID){
-        await redis.getHash(fbID)
-            .then(hash => {
-                hash.isOnline = true;
+        const hash = await redis.getHash(fbID);
 
-                redis.setHash(fbID, hash);
-            });
+        console.log(hash);
+        hash.isOnline = true;
+        await redis.setHash(fbID, hash);
 
         return true;
     },
