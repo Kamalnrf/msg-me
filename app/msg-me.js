@@ -318,7 +318,7 @@ const msgMe = {
         return new Promise ((resolve, reject) => {
             redis.getHash(fbID)
                 .then(hash => {
-                    hash.userQueue = ['def'];
+                    hash.userQueue = 'def';
 
                     redis.setHash(fbID , hash);
                     resolve(true);

@@ -101,10 +101,18 @@ describe("msg-me test", function() {
             })
     });
 
-    add100Queue();
 
-    it ('queue test', done => {
+    it ('remove queue test', done => {
+        msg_me.removeQueuedUsers(userID)
+            .then(removed => {
+                redis.getHash(userID)
+                    .then(hash => {
+                        const quee = hash.userQueue;
 
+                        expect(quee.length).toBe(3);
+                        done();
+                    })
+            })
     });
 });
 
