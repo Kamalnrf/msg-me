@@ -14,6 +14,7 @@ const postback = (bot) => {
     bot.on('postback', (payload, chat) => {
        console.log(payload);
 
+       chooseThePostback(payload, chat);
        if (payload.postback.payload === '_stop') {
            const fbID = payload.sender.id;
 
@@ -193,15 +194,25 @@ const postback = (bot) => {
     });
 
     //----------Feedback----------//
-    bot.on('postback:feedback', (payload, chat) => {
+    /*bot.on('postback:feedback', (payload, chat) => {
        console.log(payload);
 
        chat.conversation(convo => {
            convo.sendTypingIndicator(1000).then(() => feedback.sendFeedBack(payload, convo));
        })
-    });
+    });*/
 
     console.log(`Initialized the postbacks.`);
 };
+
+function chooseThePostback (payload, chat){
+    switch (payload.postback.payload){
+        case 'feedback':
+            chat.conversation(convo => {
+                convo.sendTypingIndicator(1000).then(() => feedback.sendFeedBack(payload, convo));
+            });
+            break;
+    }
+}
 
 module.exports = postback;
