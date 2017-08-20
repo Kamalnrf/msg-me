@@ -15,7 +15,7 @@ const feedBack = {
                 convo.say(`Thank you for feedback`)
                     .then(() => convo.end());
             }catch(error) {
-                if (payload.postback.payload === '_stop'){
+                if (payload.postback.payload === 'feedback'){
                     convo.say(`You broke the conversation, try sending it again...`);
                 }
                 convo.say(`I'm afraid to say that something went please try again later`);
