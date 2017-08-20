@@ -196,9 +196,14 @@ const postback = (bot) => {
     bot.on('postback:feedback', (payload, chat) => {
        console.log(payload);
 
-       chat.conversation(convo => {
-           convo.sendTypingIndicator(1000).then(() => feedback.sendFeedBack(payload, convo));
-       })
+       try {
+
+           chat.conversation(convo => {
+               convo.sendTypingIndicator(1000).then(() => feedback.sendFeedBack(payload, convo));
+           })
+       }catch (error){
+
+       }
     });
 
     console.log(`Initialized the postbacks.`);
