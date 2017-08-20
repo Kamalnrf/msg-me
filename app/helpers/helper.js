@@ -16,7 +16,7 @@ const helper = () =>{
         chat.say("Something went wrong tryagain");
     }
 
-    function chooseThePostback (payload, chat) => {
+    function chooseThePostback (payload, chat)  {
         switch (payload.postback.payload){
         case '_stop':{
             const fbID = payload.sender.id;
