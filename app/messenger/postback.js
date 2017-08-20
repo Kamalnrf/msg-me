@@ -116,21 +116,25 @@ const postback = (bot) => {
 
         msg_me.isConnected(fbID)
             .then(connected => {
-                if (connected === 'true' || connected === true)
-                    chat.say("When you are in a conversation you can't start a new one.");
-                else if (connected === 'false' || connected === false)
-                    chat.conversation((convo) => {
-                        convo.sendTypingIndicator(1000)
-                            .then(() => connection.estConnection(convo, payload, bot))
-                            .catch(error => console.log(error));
-                    });
-                else
-                    chat.say("You need to create a username first.")
-                        .then(() => {
-                            chat.conversation((convo) => {
-                                convo.sendTypingIndicator(1000).then(() => newUser.createUser(convo, payload));
-                            })
+                try {
+                    if (connected === 'true' || connected === true)
+                        chat.say("When you are in a conversation you can't start a new one.");
+                    else if (connected === 'false' || connected === false)
+                        chat.conversation((convo) => {
+                            convo.sendTypingIndicator(1000)
+                                .then(() => connection.estConnection(convo, payload, bot))
+                                .catch(error => console.log(error));
                         });
+                    else
+                        chat.say("You need to create a username first.")
+                            .then(() => {
+                                chat.conversation((convo) => {
+                                    convo.sendTypingIndicator(1000).then(() => newUser.createUser(convo, payload));
+                                })
+                            });
+                }catch (error){
+                    chat.say('Seems like something went wrong, try sending a message...');
+                }
 
             }).catch(error => console.log(error));
     });
