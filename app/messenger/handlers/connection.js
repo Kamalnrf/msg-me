@@ -64,8 +64,8 @@ const Connection = {
                                                                                                                         payload: 'REQ_NO'
                                                                                                                     }
                                                                                                                 ];
-                                                                                                                chat.say(`We have sent the connection request`);
-                                                                                                                bot.sendButtonTemplate(recieverID, 'Some wants to talk to you. Would you like to connect?', buttons);
+                                                                                                                chat.say(`We have sent the connection request, Please wait...`);
+                                                                                                                bot.sendButtonTemplate(recieverID, 'Someone wants to talk to you anonymously. Would you like to connect?', buttons);
                                                                                                                 convo.end();
                                                                                                             } else
                                                                                                                 convo.say("Something went wrong try again");
