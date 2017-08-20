@@ -10,13 +10,13 @@ const feedback = require('../messenger/handlers/feedback');
 const shrImage = require('../messenger/handlers/shrImage');
 
 
-const helper = () =>{
-    function basicErrorLog(error, chat){
+const helper ={
+    basicErrorLog: (error, chat) => {
         console.log(error);
         chat.say("Something went wrong tryagain");
-    }
+    },
 
-    function chooseThePostback (payload, chat)  {
+    chooseThePostback: (payload, chat) => {
         switch (payload.postback.payload){
         case '_stop':{
             const fbID = payload.sender.id;
