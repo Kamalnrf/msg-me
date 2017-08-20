@@ -41,8 +41,8 @@ const postback = (bot) => {
             .then(recieverID => {
                 if (recieverID !== '-1') {
                     if (msg_me.connect(senderID, recieverID) === true) {
-                        chat.say(`A connection has been established`);
-                        bot.say(recieverID, `A connection has been established`);
+                        chat.say(`A connection has been established.If at any point you feel like closing the connection send '#stop'`);
+                        bot.say(recieverID, `A connection has been established.If at any point you feel like closing the connection send '#stop'`);
                     }
                 }else {
                     chat.say(`Your request has been, expired.`);
