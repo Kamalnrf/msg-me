@@ -43,11 +43,13 @@ setUp(bot);
 message(bot);
 
 //Postbacks
-postbacks(bot);
+//postbacks(bot);
 
 //Starts all the backgroud services
 services(bot);
 
 //Starting the server
 server(bot);
+
+const client = redis.getClient();
 

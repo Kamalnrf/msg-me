@@ -25,7 +25,7 @@ const setup = (bot) => {
             });
     });
 
-    bot.setPersistentMenu([
+    /*bot.setPersistentMenu([
         {
             title: 'Start a conversation',
             type: 'postback',
@@ -61,7 +61,7 @@ const setup = (bot) => {
                 }
             ]
         }
-    ]);
+    ]);*/
 
     console.log("Completed the basic setUp");
 };
