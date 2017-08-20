@@ -11,19 +11,24 @@ const block = {
         const question = "Enter the username you want to block.";
 
         const answer = (payload, chat) => {
-            const userName = payload.message.text;
-            const blockerID = payload.sender.id;
+            try {
+                const userName = payload.message.text;
+                const blockerID = payload.sender.id;
 
-            msg_me.getFBID(userName)
-                .then(userId => {
-                    msg_me.addBlocked(blockerID, userId);
-                    convo.say(`Blocked the users ${userName}, from messaging you.`)
-                        .then(() => convo.end());
-                    msg_me.getMyName(blockerID)
-                        .then(name => {
-                            bot.sendTextMessage(userId, `You have been blocked to message ${name} `);
-                        });
-                });
+                msg_me.getFBID(userName)
+                    .then(userId => {
+                        msg_me.addBlocked(blockerID, userId);
+                        convo.say(`Blocked the users ${userName}, from messaging you.`)
+                            .then(() => convo.end());
+                        msg_me.getMyName(blockerID)
+                            .then(name => {
+                                bot.sendTextMessage(userId, `You have been blocked to message ${name} `);
+                            });
+                    });
+            }catch(error){
+                convo.say(`I'm afraid to say something went wrong please tryagain later.`)
+                    .then(() => convo.end());
+            }
         };
 
         convo.ask(question, answer);

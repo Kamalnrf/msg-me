@@ -14,43 +14,49 @@ const newUser = {
         const question = "Enter your unique user ID";
 
         const answer = (payload, chat) => {
-            const fbID = payload.sender.id;
-            const reqUserName = payload.message.text.toLowerCase();
+            try {
+                const fbID = payload.sender.id;
+                const reqUserName = payload.message.text.toLowerCase();
 
-            msg_me.isExitingUser(reqUserName)
-                .then(existense => {
-                    console.log(`Requested username Existence: ${existense}`);
-                    if (existense === false){
-                        if (checkRules(reqUserName))
-                            if (msg_me.createUser(fbID, reqUserName) === true) {
-                                convo.getUserProfile()
-                                    .then((user) => {
-                                        shrImage.genImage(user.profile_pic, reqUserName)
-                                            .then(image => {
-                                                shrImage.getLink(image, reqUserName)
-                                                    .then(link => {
-                                                        console.log(link);
-                                                        msg_me.saveImage(fbID, link);
-                                                        convo.say({
-                                                            attachment: 'image',
-                                                            url: link
-                                                        }).then(() =>convo.say(`Thanks for creating the username. Your username is ${reqUserName}. Share it among your friends!`)
-                                                            .then(() => convo.sendTypingIndicator(5000).then(() => connection.estConnection(convo, payload, bot))));
-                                                    })
-                                            });
-                                    });
-                            }
+                msg_me.isExitingUser(reqUserName)
+                    .then(existense => {
+                        console.log(`Requested username Existence: ${existense}`);
+                        if (existense === false) {
+                            if (checkRules(reqUserName))
+                                if (msg_me.createUser(fbID, reqUserName) === true) {
+                                    convo.getUserProfile()
+                                        .then((user) => {
+                                            shrImage.genImage(user.profile_pic, reqUserName)
+                                                .then(image => {
+                                                    shrImage.getLink(image, reqUserName)
+                                                        .then(link => {
+                                                            console.log(link);
+                                                            msg_me.saveImage(fbID, link);
+                                                            convo.say({
+                                                                attachment: 'image',
+                                                                url: link
+                                                            }).then(() => convo.say(`Thanks for creating the username. Your username is ${reqUserName}. Share it among your friends!`)
+                                                                .then(() => convo.sendTypingIndicator(5000).then(() => connection.estConnection(convo, payload, bot))));
+                                                        })
+                                                });
+                                        });
+                                }
+                                else
+                                    convo.say(`There was some problem while creating your username`);
                             else
-                                convo.say(`There was some problem while creating your username`);
-                        else
-                            convo.say("The name you choose doesn't comply with our naming convention.")
+                                convo.say("The name you choose doesn't comply with our naming convention.")
+                                    .then(() => this.createUser(convo, payload));
+                        } else
+                            convo.say(`We are sorry. It looks like this username is taken. Please try another one.`)
                                 .then(() => this.createUser(convo, payload));
-                    }else
-                        convo.say(`We are sorry. It looks like this username is taken. Please try another one.`)
-                            .then(() => this.createUser(convo, payload));
-                })
-                .catch(error => console.log(error));
+                    })
+                    .catch(error => console.log(error));
+            }catch (error){
+                convo.say(`I'm afraid to say that something went wrong, please try again later.`)
+                    .then(() => convo.end());
+            }
         };
+
 
         convo.say("First, To get started you need to Create your User Id. ;)")
             .then(() => convo.ask(question, answer));

@@ -13,17 +13,21 @@ const queue = {
         };
 
         const answer = (payload, chat) => {
-            const senderID = payload.sender.id;
-            const reply = payload.message.text;
+            try {
+                const senderID = payload.sender.id;
+                const reply = payload.message.text;
 
-            if (reply === 'Yes' || reply === 'yes') {
-                msg_me.addQueue(senderID, reqUser);
-                convo.say("You will be notified when the user is back online")
-                    .then(() => convo.end());
+                if (reply === 'Yes' || reply === 'yes') {
+                    msg_me.addQueue(senderID, reqUser);
+                    convo.say("You will be notified when the user is back online")
+                        .then(() => convo.end());
+                }
+                else
+                    convo.say("OK")
+                        .then(() => convo.end());
+            }catch (error) {
+                convo.say(`I'm afraid to say that something went wrong, please try again later`);
             }
-            else
-                convo.say("OK")
-                    .then(() => convo.end());
         };
 
         convo.ask(question, answer);

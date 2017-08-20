@@ -216,14 +216,18 @@ const msgMe = {
      * @returns {boolean}
      */
     async turnOffline(fbId){
-        await redis.getHash(fbId)
-            .then(hash => {
-                hash.isOnline = false;
+        try {
+            await redis.getHash(fbId)
+                .then(hash => {
+                    hash.isOnline = false;
 
-                redis.setHash(fbId, hash);
-            });
+                    redis.setHash(fbId, hash);
+                });
 
-        return true;
+            return true;
+        }catch (error){
+            return false;
+        }
     },
 
     /**
@@ -232,13 +236,17 @@ const msgMe = {
      * @returns {boolean}
      */
     async turnOnline(fbID){
-        const hash = await redis.getHash(fbID);
+        try {
+            const hash = await redis.getHash(fbID);
 
-        console.log(hash);
-        hash.isOnline = true;
-        await redis.setHash(fbID, hash);
+            console.log(hash);
+            hash.isOnline = true;
+            await redis.setHash(fbID, hash);
 
-        return true;
+            return true;
+        }catch (error) {
+            return false;
+        }
     },
 
     /**

@@ -56,10 +56,11 @@ const postback = (bot) => {
 
         msg_me.whatIsOnHold(senderID)
             .then(recieverID => {
-                if (recieverID !== -1) {
+                if (recieverID !== '-1') {
                     if (msg_me.disconnect(senderID, recieverID) === true) {
                         chat.say(`Ok`);
                         bot.say(recieverID, `Your request has been rejected, try connecting with someone else.`);
+                        msg_me.removeQueuedUsers(recieverID);
                     }
                 }else {
                     chat.say(`OK.`);

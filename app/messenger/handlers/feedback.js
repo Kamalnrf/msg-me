@@ -9,10 +9,14 @@ const feedBack = {
         const question = `Please tell us how to improve Chanun to help you better.`;
 
         const answer = (payload, chat) => {
-            const feedback = payload.message.text;
+            try {
+                const feedback = payload.message.text;
 
-            convo.say(`Thank you for feedback`)
-                .then(() => convo.end());
+                convo.say(`Thank you for feedback`)
+                    .then(() => convo.end());
+            }catch(error) {
+                convo.say(`I'm afraid to say that something went please try again later`);
+            }
         };
 
         convo.ask(question, answer);

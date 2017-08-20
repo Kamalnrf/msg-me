@@ -119,7 +119,7 @@ async function unQueue (senderID, recieverID){
             })
         });
 
-    msg_me.removeQueuedUsers(senderID);
+    await msg_me.removeQueuedUsers(senderID);
 
     await msg_me.getAllQueuedUsers(recieverID)
         .then(queuedUsers => {
@@ -132,7 +132,7 @@ async function unQueue (senderID, recieverID){
             });
         });
 
-    msg_me.removeQueuedUsers(recieverID)
+    await msg_me.removeQueuedUsers(recieverID)
 }
 
 
