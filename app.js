@@ -4,7 +4,7 @@
 
 'use strict';
 
-const BootBot = require('bootbot');
+const BootBot = require('bootbothook');
 const nconf = require('nconf');
 const server = require('./config/initializers/server');
 const redis = require('./services/redis');
@@ -50,6 +50,4 @@ services(bot);
 
 //Starting the server
 server(bot);
-
-const client = redis.getClient();
 
