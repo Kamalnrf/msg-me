@@ -14,7 +14,7 @@ const backGroundService = (bot) => {
     setInterval(callMyself, 900000);
 
     //Checking if the connection is expired.
-    setInterval(isExpired, 90000);
+    setInterval(isExpired, 180000);
 
     console.log("Started all the services.")
 };
