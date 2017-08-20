@@ -63,11 +63,14 @@ function isExpired (){
                             const time = onHold.split('-')[0];
                             const recipientID = onHold.split('-')[1];
 
-                            if ((new Date().getMinutes()) - time >= 3){
-                                msg_me.disconnect(requesterID, recipientID);
-                                msg_me.removeOhHold(requesterID);
-                                bot.say(requesterID, `Your request has expired.`);
-                                bot.say(recipientID, `Your request has expired`);
+                            if (onHold.split('-')[0].length >= 2) {
+
+                                if ((new Date().getMinutes()) - time >= 3) {
+                                    msg_me.disconnect(requesterID, recipientID);
+                                    msg_me.removeOhHold(requesterID);
+                                    bot.say(requesterID, `Your request has expired.`);
+                                    bot.say(recipientID, `Your request has expired`);
+                                }
                             }
                         })
                 })

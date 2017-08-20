@@ -382,14 +382,6 @@ const msgMe = {
                             console.log(reciverLstMsg);
 
                             resolve(((new Date()).getMinutes() - reciverLstMsg) >= 15  || ((new Date()).getMinutes() - senderLstMsg) >= 15);
-                            // if (senderLstMsg >= reciecerHash) {
-                            //     console.log(senderLstMsg - reciverLstMsg);
-                            //     resolve((senderLstMsg - reciverLstMsg) >= 60000  || (senderLstMsg - reciverLstMsg) < 0);
-                            // }
-                            // else {
-                            //     console.log(senderLstMsg - reciverLstMsg);
-                            //     resolve((reciverLstMsg - senderLstMsg) >= 60000  || (reciverLstMsg - senderLstMsg) < 0 );
-                            //}
                         })
                 });
         })
