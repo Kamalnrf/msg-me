@@ -27,33 +27,15 @@ const setup = (bot) => {
 
     bot.setPersistentMenu([
         {
-            title: 'Start a conversation',
+            title: 'Online/Offline',
             type: 'postback',
-            payload: '_start'
+            payload: 'online/offline'
         },
 
         {
-          title: 'Stop the conversation',
-          type: 'postback',
-          payload: '_stop'
-        },
-
-        {
-            title: 'more',
-            type: 'nested',
-            call_to_actions: [
-                {
-                    title: 'Online/Offline',
-                    type: 'postback',
-                    payload: 'online/offline'
-                },
-
-                {
-                    title: 'My username',
-                    type: 'postback',
-                    payload: 'myName'
-                }
-            ]
+            title: 'My username',
+            type: 'postback',
+            payload: 'myName'
         }
     ]);
 
