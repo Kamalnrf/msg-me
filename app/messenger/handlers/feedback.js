@@ -4,6 +4,7 @@
 
 'use strict';
 const postbacks = require('../postback');
+const helper = require('../../helpers/helper');
 
 const feedBack = {
     sendFeedBack (payload, convo){
@@ -16,11 +17,8 @@ const feedBack = {
                 convo.say(`Thank you for feedback`)
                     .then(() => convo.end());
             }catch(error) {
-                postbacks(bot);
-                if (payload.postback.payload === 'feedback'){
-                    convo.say(`You broke the conversation, try sending it again...`);
-                }else
-                    convo.say(`I'm afraid to say that something went please try again later`);
+                helper.chooseThePostback(payload, chat);
+                convo.end();
             }
         };
 

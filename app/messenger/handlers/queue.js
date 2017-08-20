@@ -4,6 +4,7 @@
 
 'use strict';
 const msg_me = require('../../msg-me');
+const helper = require('../../helpers/helper');
 
 const queue = {
     addQueue (convo, payload, reqUser){
@@ -26,7 +27,8 @@ const queue = {
                     convo.say("OK")
                         .then(() => convo.end());
             }catch (error) {
-                convo.say(`I'm afraid to say that something went wrong, please try again later`);
+                helper.chooseThePostback(payload, chat);
+                convo.end();
             }
         };
 

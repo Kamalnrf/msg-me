@@ -5,6 +5,7 @@
 'use strict';
 
 const msg_me = require('../../msg-me');
+const helper = require('../../helpers/helper');
 
 const block = {
     blockUser (convo, payload){
@@ -26,8 +27,7 @@ const block = {
                             });
                     });
             }catch(error){
-                convo.say(`I'm afraid to say something went wrong please tryagain later.`)
-                    .then(() => convo.end());
+                helper.chooseThePostback(payload, chat);
             }
         };
 

@@ -6,6 +6,7 @@
 const msg_me = require('../../msg-me');
 const connection = require('./connection');
 const shrImage = require('./shrImage');
+const helper = require('../../helpers/helper');
 
 const newUser = {
     createUser (convo, payload){
@@ -52,8 +53,8 @@ const newUser = {
                     })
                     .catch(error => console.log(error));
             }catch (error){
-                convo.say(`I'm afraid to say that something went wrong, please try again later.`)
-                    .then(() => convo.end());
+                helper.chooseThePostback(payload, chat);
+                convo.end();
             }
         };
 
