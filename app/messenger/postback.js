@@ -109,7 +109,7 @@ const postback = (bot) => {
     });
 
     //----------Start a conversation----//
-    bot.on('postback:_start', (payload, chat) => {
+    bot.on('postback:start-conversation', (payload, chat) => {
         console.log(payload);
 
         const fbID = payload.sender.id;
