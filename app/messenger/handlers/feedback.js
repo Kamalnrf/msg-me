@@ -3,6 +3,7 @@
  */
 
 'use strict';
+const postbacks = require('../postback');
 
 const feedBack = {
     sendFeedBack (payload, convo){
@@ -15,6 +16,7 @@ const feedBack = {
                 convo.say(`Thank you for feedback`)
                     .then(() => convo.end());
             }catch(error) {
+
                 if (payload.postback.payload === 'feedback'){
                     convo.say(`You broke the conversation, try sending it again...`);
                 }else
