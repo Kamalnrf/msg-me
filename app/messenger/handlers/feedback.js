@@ -16,7 +16,7 @@ const feedBack = {
                 convo.say(`Thank you for feedback`)
                     .then(() => convo.end());
             }catch(error) {
-
+                postbacks(bot);
                 if (payload.postback.payload === 'feedback'){
                     convo.say(`You broke the conversation, try sending it again...`);
                 }else
