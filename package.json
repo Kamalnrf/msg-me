@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/Kamalnrf/msg-me#readme",
   "dependencies": {
-    "axios": "^0.16.2",
+    "axios": "^0.19.2",
     "bootbot": "^1.0.12",
     "bootbothook": "^1.0.12",
     "dotenv": "^4.0.0",
